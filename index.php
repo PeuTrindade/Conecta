@@ -53,6 +53,7 @@ require_once("./php/Data.php");
         <h2>Confira nossos posts</h2>
         <h3>Fique por dentro das novidades</h3>
         <img class="arrow" src="./images/arrow.svg" alt="arrow"/>
+        <div class="content">
         <div class="posts">
             <?php   
                 foreach ($data as $post => $value) { ?>
@@ -68,6 +69,24 @@ require_once("./php/Data.php");
                 }
             ?>
         </div>
+        <div class="sideBar">
+            <form class="search">
+                <input type="text" placeholder="Busque por um título"/> <br>
+                <button>Pesquisar</button>
+            </form>
+            <h3>Tags</h3>
+            <ul class="tags">
+                <li>Empreendedorismo</li>
+                <li>Tecnologia</li>
+                <li>Trabalho</li>
+            </ul>
+        </div>
+        </div>
+        <ul class="pages">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
     </section>
     </section>
 

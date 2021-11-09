@@ -12,7 +12,7 @@
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
     box-shadow: 1px 1px 5px #000000;
-    position: sticky;
+    position:sticky;
     width: 100%;
 }
 

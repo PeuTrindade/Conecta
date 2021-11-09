@@ -1,5 +1,5 @@
 .allContent {
-    animation: anime 1s forwards;
+    animation: anime .5s forwards linear;
 }
 
 .welcomeSection {
