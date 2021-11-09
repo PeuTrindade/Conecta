@@ -1,0 +1,130 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.navbarDesktop {
+    display: flex;
+    background-color: #375D81;
+    height: 3rem;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    box-shadow: 1px 1px 5px #000000;
+    position: sticky;
+    width: 100%;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    margin-left: 3%;
+    color: white;
+    cursor: pointer;
+}
+
+.brand img {
+    width: 25px;
+    object-fit: cover;
+    margin-right: .3rem;
+}
+
+.desktopItems {
+    display: flex;
+    list-style: none;
+    margin-right: 3%;
+    color: white;
+}
+
+.desktopItems a {
+    text-decoration: none;
+    color: white;
+}
+
+.desktopItems li {
+    margin-right: 2rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.desktopItems a:hover{
+    color: rgb(243, 243, 243);
+}
+
+.menuMobileDisabled {
+    display: none;
+    color: white;
+}
+
+.menuMobileCloseDisabled {
+    display: none;
+}
+
+.menuMobileCloseActive {
+    width: 25px;
+    object-fit: cover;
+    margin-right: 3%;
+    color: white;
+    cursor: pointer;
+}
+
+.menuMobileActive {
+    width: 25px;
+    object-fit: cover;
+    margin-right: 3%;
+    color: white;
+    cursor: pointer;
+}
+
+.mobileDisplayDisabled {
+    display: none;
+}
+
+.mobileDisplayActive {
+    position: absolute;
+    z-index: 100000;
+    background-color: #375D81;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+}
+
+.mobileDisplayItems {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    list-style: none;
+    margin-top: 15rem;
+}
+
+.mobileDisplayItems li,
+.mobileDisplayItems a {
+    margin-bottom: 2rem;
+    text-decoration: none;
+    color: #375D81;
+    background-color: white;
+    text-align: center;
+    width: 80%;
+    padding: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.menuMobileClose2Disabled {
+    position: absolute;
+    left: 90%;
+    margin-top: 1rem;
+    width: 25px;
+    object-fit: cover;
+    color: white;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 600px){
+    .desktopItems {
+        display: none;
+    }
+}
