@@ -93,8 +93,61 @@
 .moreInfo {
     margin-left: 3%;
     margin-top: 2rem;
+    margin-bottom: 3rem;
 }
 
 .moreInfo p {
     margin-bottom: .5rem;
+}
+
+@media screen and (max-width:1136px){
+    .postContainerAll {
+        flex-direction: column;
+    }
+    .sideBar {
+        margin-top: 3rem;
+        margin-left: 2%;
+        height: 20rem;
+        width: 95%;
+        margin-bottom: 3rem;
+    }
+}
+
+@media screen and (max-width: 745px){
+    .postImg {
+        width: 500px;
+        height: 250px;
+    }
+    .postContainer h2,
+    .postText,
+    .postComent,
+    .formContainer textarea {
+        width: 500px;
+    }
+}
+
+@media screen and (max-width: 535px){
+    .postImg {
+        width: 400px;
+        height: 200px;
+    }
+    .postContainer h2,
+    .postText,
+    .postComent,
+    .formContainer textarea {
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 429px){
+    .postImg {
+        width: 300px;
+        height: 150px;
+    }
+    .postContainer h2,
+    .postText,
+    .postComent,
+    .formContainer textarea {
+        width: 300px;
+    }
 }

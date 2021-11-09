@@ -1,6 +1,62 @@
 <?php
 
-require_once("./php/Data.php");
+//Importações
+
+require_once("./backend/Data.php");
+require("./backend/FilterByTitle_class.php");
+
+// Variável onde recebe informações do post
+$post = null;
+
+// Estados para o sistema saber quais filtros deve realizar
+$filterByTitle = false;
+$filterByTags = false;
+
+// Variável para mostrar qual o filtro está ativo
+$filterTags = null;
+
+// Função para o filtro por título
+if(isset($_POST["search_btn"])){
+    $text = $_POST["title_search"];
+
+    if($text){
+        foreach ($data as $key => $value) {
+            if($value["title"] === $text){
+                $filterByTitle = true;
+                $filterTags = $text;
+                $post = new FilterByTitle(
+                    $value["id"],
+                    $value["title"],
+                    $value["image"],
+                    $value["creationDate"],
+                    $value["updateDate"]
+                );
+            }
+        }
+    }
+}
+
+// Função para deletar os filtros e mostrar todos os posts
+if(isset($_POST["deleteFilter"])){
+    $post = null;
+    $filterByTitle = false;
+    $filterTags = null;
+    $filterByTags = false;
+    header("Location: /Conecta/");
+}
+
+// Variável que armazena a URL da página
+$url = $_SERVER["REQUEST_URI"];
+
+// Função para o filtro por categorias
+if($url !== "/Conecta/"){
+   $tag = explode("?",$url)[1]; 
+   if($tag){
+        $filterByTitle = false;
+        $filterByTags = true;
+        $filterTags = $tag;
+    }
+}
 
 ?>
 
@@ -55,37 +111,70 @@ require_once("./php/Data.php");
         <img class="arrow" src="./images/arrow.svg" alt="arrow"/>
         <div class="content">
         <div class="posts">
-            <?php   
+            <?php  
+                if(!$filterByTitle && !$filterByTags){
                 foreach ($data as $post => $value) { ?>
                 <div id=<?php echo $value["id"];?> class="post">
                     <img src="<?php echo $value["image"];?>"/>
                     <div class="postInfo">
-                        <h4><a href="/Conecta/Pages/Post.php/<?php echo $value["id"]; ?>"><?php echo $value["title"]; ?></a></h4>
+                        <h4><a href="/Conecta/Pages/PostPage.php/<?php echo $value["id"]; ?>"><?php echo $value["title"]; ?></a></h4>
                         <p>Criado em <?php echo $value["creationDate"]; ?></p>
                         <p>Atualizado em <?php echo $value["updateDate"]; ?></p>
                     </div>
                 </div>
             <?php
                 }
+                } else if($filterByTitle && !$filterByTags) { ?>
+                <div id=<?php echo $post -> id;?> class="post">
+                    <img src="<?php echo $post -> image;?>"/>
+                    <div class="postInfo">
+                        <h4><a href="/Conecta/Pages/PostPage.php/<?php echo $post -> id; ?>"><?php echo $post -> title; ?></a></h4>
+                        <p>Criado em <?php echo $post -> creationDate; ?></p>
+                        <p>Atualizado em <?php echo $post -> updateDate; ?></p>
+                    </div>
+                </div>
+            <?php  
+                }
+                else if(!$filterByTitle && $filterByTags){
+                    foreach ($data as $post => $value) {
+                        if($value["category"] === $tag){ ?>
+                        <div id=<?php echo $value["id"];?> class="post">
+                            <img src="<?php echo $value["image"];?>"/>
+                            <div class="postInfo">
+                                <h4><a href="/Conecta/Pages/PostPage.php/<?php echo $value["id"]; ?>"><?php echo $value["title"]; ?></a></h4>
+                                <p>Criado em <?php echo $value["creationDate"]; ?></p>
+                                <p>Atualizado em <?php echo $value["updateDate"]; ?></p>
+                            </div>
+                        </div> <?php }
+                    }
+                }
             ?>
         </div>
         <div class="sideBar">
-            <form class="search">
-                <input type="text" placeholder="Busque por um título"/> <br>
-                <button>Pesquisar</button>
+            <form action="" method="POST" class="search">
+                <input name="title_search" type="text" placeholder="Busque por um título"/> <br>
+                <button name="search_btn" type="submit">Pesquisar</button>
             </form>
+            <?php  
+                if($filterTags){ ?>
+                <form class="filterTags" action="" method="POST">
+                    <h4><?php echo $filterTags; ?></h4>
+                    <button name="deleteFilter" type="submit">Deletar</button>
+                </form>
+            <?php }
+            ?>
             <h3>Tags</h3>
             <ul class="tags">
-                <li>Empreendedorismo</li>
-                <li>Tecnologia</li>
-                <li>Trabalho</li>
+                <li><a href="/Conecta/?Empreendedorismo">Empreendedorismo</a></li>
+                <li><a href="/Conecta/?Tecnologia">Tecnologia</a></li>
+                <li><a href="/Conecta/?Trabalho">Trabalho</a></li>
             </ul>
         </div>
         </div>
         <ul class="pages">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
+            <li class="pageActive">1</li>
+            <li class="pageDisabled">2</li>
+            <li class="pageDisabled">3</li>
         </ul>
     </section>
     </section>

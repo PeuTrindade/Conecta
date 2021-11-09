@@ -1,3 +1,6 @@
+<!-- Componente da Navbar -->
+
+<!-- Importando o css da Navbar -->
 <style>
     <?php include "../css/header.css"; ?>
 </style>

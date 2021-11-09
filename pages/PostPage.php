@@ -1,25 +1,36 @@
 <?php
+
+// Importações
 require("../components/Sidebar.php");
-require("../php/Data.php");
+require("../backend/Data.php");
+require("../backend/Post_class.php");
 require_once("../components/Navbar.php");
 
+// Variável que armazena o URL da página
 $url = $_SERVER["REQUEST_URI"];
+
+// Variável que armazena o ID do post contido na URL
 $postID = explode("/",$url)[4];
 
+// Variável que seleciona o post no array de posts através do index
 $getPost = $data[$postID - 1];
 
-$post = new Post($getPost["id"]);
-$post -> title = $getPost["title"];
-$post -> creationDate = $getPost["creationDate"];
-$post -> updateDate = $getPost["updateDate"];
-$post -> image = $getPost["image"];
-$post -> text = $getPost["text"];
-$post -> author = $getPost["author"];
-$post -> category = $getPost["category"];
-$post -> coments = $getPost["coments"];
+// Enviando dados do post para a classe
+$post = new Post(
+    $getPost["id"],
+    $getPost["title"],
+    $getPost["creationDate"],
+    $getPost["updateDate"],
+    $getPost["image"],
+    $getPost["text"],
+    $getPost["author"],
+    $getPost["category"],
+    $getPost["coments"]);
 
+// Alterando o caminho da pasta de imagens
 $newSrcImg = "../".".".$post -> image;
 
+// Função para adicionar comentários
 if(isset($_POST["sendComent"])){
     $text = $_POST["coment"];
     if($text){
@@ -27,6 +38,30 @@ if(isset($_POST["sendComent"])){
     } 
 }
 
+// Função para o filtro por título
+if(isset($_POST["search_btn"])){
+    $text = $_POST["title_search"];
+    if($text){
+        foreach ($data as $key => $value) {
+            if($value["title"] === $text){
+                $getPost = $data[$value["id"] - 1];
+                $post = new Post(
+                    $getPost["id"],
+                    $getPost["title"],
+                    $getPost["creationDate"],
+                    $getPost["updateDate"],
+                    $getPost["image"],
+                    $getPost["text"],
+                    $getPost["author"],
+                    $getPost["category"],
+                    $getPost["coments"]);
+            }
+        }
+    }
+}
+
+// Alterando o caminho da pasta de imagens
+$newSrcImg = "../".".".$post -> image;
 ?>
 
 
