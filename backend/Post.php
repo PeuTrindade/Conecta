@@ -12,7 +12,7 @@ class Post {
     public $category;
     public $coments;
  
-    function __construct($id,$title,$creationDate,$updateDate,$image,$text,$author,$category,$coments) {
+    function __construct($title,$image,$text,$author,$category,$coments = [],$creationDate = null,$updateDate = null,$id = null) {
      $this -> id = $id;
      $this -> title = $title;
      $this -> creationDate = $creationDate;
@@ -22,5 +22,17 @@ class Post {
      $this -> author = $author;
      $this -> category = $category;
      $this -> coments = $coments;
+    }
+
+    function generatePost($data) {
+        if($this->title && $this->text && $this->category && $this->image){
+            $arraySize = count($data);
+            date_default_timezone_set("America/Sao_Paulo");
+            $this->date = date('y/m/d');
+    
+            $schema = array("id" => ($arraySize + 1), "title" => $this->title, "image" => $this->image, "creationDate" => $this->date, "updateDate" => $this->date , "text" => $this->text, "category" => $this->category, "coments" => array());
+            array_push($data, $schema);
+            return $data;
+        }
     }
 }

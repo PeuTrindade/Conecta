@@ -15,6 +15,7 @@ if(screenSize <= 600){
 
 // Função para abrir o display mobile
 function openMobileDisplay(){
+    document.body.style = "overflow-y: hidden"
     menuMobileDisabled.className = "menuMobileDisabled";
     let closeMenu = document.querySelector(".menuMobileCloseDisabled");
     closeMenu.className = "menuMobileCloseActive";
@@ -23,6 +24,7 @@ function openMobileDisplay(){
 
 // Função para fechar o display mobile
 function closeMobileDisplay(){
+    document.body.style = "overflow-y: auto"
     let closeMenu = document.querySelector(".menuMobileCloseActive");
     closeMenu.className = "menuMobileCloseDisabled";
     menuMobileDisabled.className = "menuMobileActive";

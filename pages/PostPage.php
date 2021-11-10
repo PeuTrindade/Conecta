@@ -17,15 +17,16 @@ $getPost = $data[$postID - 1];
 
 // Enviando dados do post para a classe
 $post = new Post(
-    $getPost["id"],
     $getPost["title"],
-    $getPost["creationDate"],
-    $getPost["updateDate"],
     $getPost["image"],
     $getPost["text"],
     $getPost["author"],
     $getPost["category"],
-    $getPost["coments"]);
+    $getPost["coments"],
+    $getPost["creationDate"],
+    $getPost["updateDate"],
+    $getPost["id"]
+);
 
 // Alterando o caminho da pasta de imagens
 $newSrcImg = "../".".".$post -> image;
@@ -46,15 +47,16 @@ if(isset($_POST["search_btn"])){
             if($value["title"] === $text){
                 $getPost = $data[$value["id"] - 1];
                 $post = new Post(
-                    $getPost["id"],
                     $getPost["title"],
-                    $getPost["creationDate"],
-                    $getPost["updateDate"],
                     $getPost["image"],
                     $getPost["text"],
                     $getPost["author"],
                     $getPost["category"],
-                    $getPost["coments"]);
+                    $getPost["coments"],
+                    $getPost["creationDate"],
+                    $getPost["updateDate"],
+                    $getPost["id"]
+                );
             }
         }
     }
@@ -76,7 +78,7 @@ $newSrcImg = "../".".".$post -> image;
     <link rel="stylesheet" href="../../css/post.css"></link>
 </head>
 <body>
-    <?php Navbar();?>
+    <?php Navbar('../../images/logo.svg','../../images/menumobile.svg','../../images/closeMenu.svg');?>
     <section class="postContainerAll">
         <section class="postContainer">
         <img class="postImg" src="<?php echo $newSrcImg; ?>"/>
@@ -111,5 +113,8 @@ $newSrcImg = "../".".".$post -> image;
         </section>
         <?php SideBar();  ?>
     </section>
+
+    <script src="../../javascript/navbar.js"></script>
+    <script src="../../javascript/navigation.js"></script>
 </body>
 </html>

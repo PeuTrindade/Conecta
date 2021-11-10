@@ -132,7 +132,7 @@
     margin-top: 3rem;
 }
 
-.tags a {
+.tag {
     text-decoration: none;
     color: black;
 }
@@ -140,6 +140,10 @@
 .tags li {
     margin-bottom: .5rem;
     cursor: pointer;
+}
+
+.tagActive {
+    color: #375D81; 
 }
 
 .tags a:hover {
@@ -157,6 +161,11 @@
     margin-bottom: 3rem;
 }
 
+.pages a {
+    text-decoration: none;
+    color: #375D81;
+}
+
 .pageDisabled {
     margin-left: 1rem;
     margin-right: 1rem;
@@ -170,6 +179,22 @@
     margin-right: 1rem;
     font-weight: bold;
     cursor: pointer;
+}
+
+.leftArrow {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    color: #375D81;
+    font-weight: bold;
+}
+
+.rightArrow {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    color: #375D81;
+    font-weight: bold;
 }
 
 .filterTags {

@@ -17,9 +17,9 @@ function SideBar(){
     </form>
     <h3>Tags</h3>
     <ul class='tags'>
-        <li>Empreendedorismo</li>
-        <li>Tecnologia</li>
-        <li>Trabalho</li>
+        <li><a id='tag1' class='tag' href='/Conecta/?Empreendedorismo'>Empreendedorismo</a></li>
+        <li><a id='tag2' class='tag' href='/Conecta/?Tecnologia'>Tecnologia</a></li>
+        <li><a id='tag3' class='tag' href='/Conecta/?Trabalho'>Trabalho</a></li>
     </ul>
 </div>
     ";

@@ -51,12 +51,35 @@ $url = $_SERVER["REQUEST_URI"];
 // Função para o filtro por categorias
 if($url !== "/Conecta/"){
    $tag = explode("?",$url)[1]; 
-   if($tag){
+   if($tag && $tag !== "1" && $tag !== "2" && $tag !== "3"){
         $filterByTitle = false;
         $filterByTags = true;
         $filterTags = $tag;
     }
 }
+
+$min = 0;
+$max = 5;
+
+if($url !== "/Conecta/"){
+    $tag = explode("?",$url)[1];
+    if($tag){
+        if($tag == "1"){
+            $min = 0;
+            $max = 5;
+        }
+        else if($tag == "2"){
+            $min = 5;
+            $max = 10;
+        }
+        else {
+            $min = 10;
+            $max = 15;
+        }
+    }
+}
+
+
 
 ?>
 
@@ -83,8 +106,8 @@ if($url !== "/Conecta/"){
             </div>
             <ul class="desktopItems">
                 <li><a href="/Conecta">Home</a></li>
-                <li><a href="/Conecta/sobre">Sobre nós</a></li>
-                <li><a href="/Conecta/contato">Contato</a></li>
+                <li><a href="/Conecta/#sobre">Sobre nós</a></li>
+                <li><a href="/Conecta/#contato">Contato</a></li>
             </ul>
             <img onClick="openMobileDisplay()" class="menuMobileDisabled" src="./images/menumobile.svg"/>
             <img onClick="closeMobileDisplay()" class="menuMobileCloseDisabled" src="./images/closeMenu.svg"/>
@@ -92,9 +115,9 @@ if($url !== "/Conecta/"){
         <div class="mobileDisplayDisabled">
         <img onClick="closeMobileDisplay()" class="menuMobileClose2Disabled" src="./images/closeMenu.svg"/>
             <ul class="mobileDisplayItems">
-                <li><a href="/Conecta">Home</a></li>
-                <li><a href="/Conecta/sobre">Sobre nós</a></li>
-                <li><a href="/Conecta/contato">Contato</a></li>
+                <li><a onClick="closeMobileDisplay()" href="/Conecta">Home</a></li>
+                <li><a onClick="closeMobileDisplay()" href="/Conecta/#sobre">Sobre nós</a></li>
+                <li><a onClick="closeMobileDisplay()" href="/Conecta/#contato">Contato</a></li>
             </ul>
         </div>
     </header>
@@ -115,7 +138,8 @@ if($url !== "/Conecta/"){
         <div class="posts">
             <?php  
                 if(!$filterByTitle && !$filterByTags){
-                foreach ($data as $post => $value) { ?>
+                foreach ($data as $key => $value) { 
+                if($key >= $min && $key < $max) {?>
                 <div id=<?php echo $value["id"];?> class="post">
                     <img src="<?php echo $value["image"];?>"/>
                     <div class="postInfo">
@@ -123,7 +147,9 @@ if($url !== "/Conecta/"){
                         <p>Criado em <?php echo $value["creationDate"]; ?></p>
                         <p>Atualizado em <?php echo $value["updateDate"]; ?></p>
                     </div>
-                </div>
+                </div> <?php 
+                }
+                 ?>
             <?php
                 }
                 } else if($filterByTitle && !$filterByTags) { ?>
@@ -167,19 +193,21 @@ if($url !== "/Conecta/"){
             ?>
             <h3>Tags</h3>
             <ul class="tags">
-                <li><a href="/Conecta/?Empreendedorismo">Empreendedorismo</a></li>
-                <li><a href="/Conecta/?Tecnologia">Tecnologia</a></li>
-                <li><a href="/Conecta/?Trabalho">Trabalho</a></li>
+                <li><a id="tag1" class="tag" href="/Conecta/?Empreendedorismo">Empreendedorismo</a></li>
+                <li><a id="tag2" class="tag" href="/Conecta/?Tecnologia">Tecnologia</a></li>
+                <li><a id="tag3" class="tag" href="/Conecta/?Trabalho">Trabalho</a></li>
             </ul>
         </div>
         </div>
         <ul class="pages">
-            <li class="pageActive">1</li>
-            <li class="pageDisabled">2</li>
-            <li class="pageDisabled">3</li>
+            <li onClick="handleLeft()" class="leftArrow"><</li>
+            <li id="1" class="pageActive"><a href="/Conecta/?1">1</a></li>
+            <li id="2" class="pageDisabled"><a href="/Conecta/?2">2</a></li>
+            <li id="3" class="pageDisabled"><a href="/Conecta/?3">3</a></li>
+            <li onClick="handleRight()" class="rightArrow">></li>
         </ul>
     </section>
-    <section class="aboutContainer">
+    <section id="sobre" class="aboutContainer">
         <div class="aboutText">
             <h2>Conheça um pouco mais sobre o Conecta</h2>
             <h3>Nossa história e nossa missão</h3>
@@ -192,7 +220,7 @@ if($url !== "/Conecta/"){
         <h3>Publique artigos sobre Empreendedorismo, Tecnologia e Trabalho!</h3>
         <a href="/Conecta/pages/addPost.php">Quero Publicar</a>
     </section>
-    <footer class="footerContainer">
+    <footer id="contato" class="footerContainer">
         <div class="firstInfo">
             <div class="local">
                 <h3>Localização</h3>
@@ -218,6 +246,7 @@ if($url !== "/Conecta/"){
     </footer>
     </section>
 
-    <script src="./script.js"></script>
+    <script src="./javascript/navbar.js"></script>
+    <script src="./javascript/navigation.js"></script>
 </body>
 </html>
