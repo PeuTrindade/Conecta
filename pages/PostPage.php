@@ -1,10 +1,10 @@
 <?php
 
 // Importações
-require("../components/Sidebar.php");
-require("../backend/Data.php");
-require("../backend/Post_class.php");
-require_once("../components/Navbar.php");
+require("../components/sideBar.php");
+require("../backend/data.php");
+require("../backend/Post.php");
+require_once("../components/navbar.php");
 
 // Variável que armazena o URL da página
 $url = $_SERVER["REQUEST_URI"];

@@ -1,0 +1,57 @@
+.footerContainer {
+    display: flex;
+    margin-top: 15rem;
+    background-color: #375D81;
+    height: 15rem;
+    font-family: Arial, Helvetica, sans-serif;
+    justify-content: space-between;
+}
+
+.firstInfo {
+    margin-left: 3%;
+    margin-top: 2rem;
+}
+
+.secondInfo {
+    margin-right: 3%;
+    margin-top: 2rem;
+}
+
+.firstInfo h3,
+.secondInfo h3 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.firstInfo p,
+.secondInfo p {
+    color: rgb(228, 228, 228);
+    margin-bottom: .3rem;
+}
+
+.insta img,
+.face img {
+    width: 25px;
+    margin-right: .5rem;
+}
+
+.insta,
+.face {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: rgb(228, 228, 228);
+}
+
+@media screen and (max-width:495px){
+    .footerContainer {
+        flex-direction: column;
+        height: 34rem;
+    }
+    .secondInfo {
+        margin-right: 0;
+        margin-left: 3%;
+        margin-bottom: 3rem;
+    }
+}

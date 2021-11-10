@@ -2,8 +2,8 @@
 
 //Importações
 
-require_once("./backend/Data.php");
-require("./backend/FilterByTitle_class.php");
+require_once("./backend/data.php");
+require("./backend/FilterByTitle.php");
 
 // Variável onde recebe informações do post
 $post = null;
@@ -71,6 +71,8 @@ if($url !== "/Conecta/"){
     <link rel="stylesheet" href="./css/header.css"></link>
     <link rel="stylesheet" href="./css/body_1.css"></link>
     <link rel="stylesheet" href="./css/body_2.css"></link>
+    <link rel="stylesheet" href="./css/body_3.css"></link>
+    <link rel="stylesheet" href="./css/footer.css"></link>
 </head>
 <body>
     <header class="header">
@@ -177,6 +179,43 @@ if($url !== "/Conecta/"){
             <li class="pageDisabled">3</li>
         </ul>
     </section>
+    <section class="aboutContainer">
+        <div class="aboutText">
+            <h2>Conheça um pouco mais sobre o Conecta</h2>
+            <h3>Nossa história e nossa missão</h3>
+            <p>Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico. Com mais de 2000 anos, suas raízes podem ser encontradas em uma obra de literatura latina clássica datada de 45 AC. Richard McClintock, um professor de latim do Hampden-Sydney College na Virginia, pesquisou uma das mais obscuras palavras em latim, consectetur, oriunda de uma passagem de Lorem Ipsum, e, procurando por entre citações da palavra na literatura clássica, descobriu a sua indubitável origem. Lorem Ipsum vem das seções 1.10.32 e 1.10.33 do "de Finibus Bonorum et Malorum" (Os Extremos do Bem e do Mal), de Cícero, escrito em 45 AC. Este livro é um tratado de teoria da ética muito popular na época da Renascença. A primeira linha de Lorem Ipsum, "Lorem Ipsum dolor sit amet..." vem de uma linha na seção 1.10.32.</p>
+        </div>
+        <img src="./images/coworking3.jpg" alt="aboutUsImg"/>
+    </section>
+    <section class="addPostPage">
+        <h2>Quer compartilhar alguma novidade?</h2>
+        <h3>Publique artigos sobre Empreendedorismo, Tecnologia e Trabalho!</h3>
+        <a href="/Conecta/pages/addPost.php">Quero Publicar</a>
+    </section>
+    <footer class="footerContainer">
+        <div class="firstInfo">
+            <div class="local">
+                <h3>Localização</h3>
+                <p>Feira de Santana,BA</p>
+                <p>Rua Exemplo, 15</p>
+            </div>
+            <div class="contato">
+                <h3>Contato</h3>
+                <p>(75)99999-9999</p>
+                <p>3333-3333</p>
+            </div>
+        </div>
+        <div class="secondInfo">
+            <div class="socialMedia">
+                <h3>Redes sociais</h3>
+                <div class="insta"><img src="./images/insta.png"/> <span>@conecta</span></div>
+                <div class="face"><img src="./images/face.png"/> <span>conecta_blog</span></div>
+            </div>
+            <div class="rights">
+                <p>@Todos direitos reservados</p>
+            </div>
+        </div>
+    </footer>
     </section>
 
     <script src="./script.js"></script>
