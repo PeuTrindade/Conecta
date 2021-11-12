@@ -63,35 +63,28 @@ $url = $_SERVER["REQUEST_URI"];
 // Função para o filtro por categorias
 if($url !== "/Conecta/"){
    $tag = explode("?",$url)[1]; 
-   if($tag && $tag !== "1" && $tag !== "2" && $tag !== "3"){
+   if($tag && $tag === "Empreendedorismo" || $tag === "Trabalho" || $tag === "Tecnologia"){
         $filterByTitle = false;
         $filterByTags = true;
         $filterTags = $tag;
     }
 }
 
-$min = 0;
 $max = 5;
+$min = 0;
 
 if($url !== "/Conecta/"){
     $tag = explode("?",$url)[1];
-    if($tag){
-        if($tag == "1"){
-            $min = 0;
-            $max = 5;
-        }
-        else if($tag == "2"){
-            $min = 5;
-            $max = 10;
-        }
-        else {
-            $min = 10;
-            $max = 15;
-        }
+    if($tag !== "NaN"){
+    if($tag && $tag !== "Empreendedorismo" && $tag !== "Trabalho" && $tag !== "Tecnologia"){
+        $max = 5 * $tag;
+        $min = $max - 5;
+    }
     }
 }
 
-
+// Número de posts salvos
+$dataLength = count($data);
 
 ?>
 
@@ -177,10 +170,11 @@ if($url !== "/Conecta/"){
         </div>
         </div>
         <ul class="pages">
+            <input id="dataLength" value=<?php echo $dataLength; ?> type="hidden"/>
             <li onClick="handleLeft()" class="leftArrow"><</li>
-            <li id="1" class="pageActive"><a href="/Conecta/?1">1</a></li>
-            <li id="2" class="pageDisabled"><a href="/Conecta/?2">2</a></li>
-            <li id="3" class="pageDisabled"><a href="/Conecta/?3">3</a></li>
+            <div id="pageNavigation">
+                <li id="1" class="pageDisabled"><a href="/Conecta/?1">1</a></li>
+            </div>
             <li onClick="handleRight()" class="rightArrow">></li>
         </ul>
     </section>

@@ -161,6 +161,10 @@
     margin-bottom: 3rem;
 }
 
+#pageNavigation {
+    display: flex;
+}
+
 .pages a {
     text-decoration: none;
     color: #375D81;
