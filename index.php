@@ -1,9 +1,17 @@
 <?php
 
 //Importações
-
 require_once("./backend/data.php");
-require("./backend/FilterByTitle.php");
+require("./backend/Post.php");
+require("./components/Navbar.php");
+require("./components/Banner.php");
+require("./components/Footer.php");
+
+// Classes
+$navbarHomePage = new Navbar("./images/logo.svg","./images/menumobile.svg","./images/closeMenu.svg");
+$welcomeBanner = new Banner("Olá, somos o Conecta","Seu blog de notícias sobre Coworking e afins!","Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico. Com mais de 2000 anos, suas raízes podem ser encontradas em uma obra de literatura latina clássica datada de 45 AC. Richard McClintock, um professor de latim do Hampden-Sydney College na Virginia, pesquisou uma das mais obscuras palavras em latim, consectetur, oriunda de uma passagem de Lorem Ipsum, e, procurando por entre citações da palavra na literatura clássica, descobriu a sua indubitável origem. Lorem Ipsum vem das seções 1.10.32 e 1.10.33 do 'de Finibus Bonorum et Malorum' (Os Extremos do Bem e do Mal), de Cícero, escrito em 45 AC. Este livro é um tratado de teoria da ética muito popular na época da Renascença. A primeira linha de Lorem Ipsum, 'Lorem Ipsum dolor sit amet...' vem de uma linha na seção 1.10.32.","./images/coworking1.jpg","welcomeSection","textContainer","coworkingImg");
+$aboutBanner = new Banner("Conheça um pouco mais sobre o Conecta","Nossa história e nossa missão","Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico. Com mais de 2000 anos, suas raízes podem ser encontradas em uma obra de literatura latina clássica datada de 45 AC. Richard McClintock, um professor de latim do Hampden-Sydney College na Virginia, pesquisou uma das mais obscuras palavras em latim, consectetur, oriunda de uma passagem de Lorem Ipsum, e, procurando por entre citações da palavra na literatura clássica, descobriu a sua indubitável origem. Lorem Ipsum vem das seções 1.10.32 e 1.10.33 do 'de Finibus Bonorum et Malorum' (Os Extremos do Bem e do Mal), de Cícero, escrito em 45 AC. Este livro é um tratado de teoria da ética muito popular na época da Renascença. A primeira linha de Lorem Ipsum, 'Lorem Ipsum dolor sit amet...' vem de uma linha na seção 1.10.32.","./images/coworking3.jpg","aboutContainer","aboutText","aboutUsImg");
+$footerHome = new Footer("./images/insta.png","./images/face.png");
 
 // Variável onde recebe informações do post
 $post = null;
@@ -24,12 +32,16 @@ if(isset($_POST["search_btn"])){
             if($value["title"] === $text){
                 $filterByTitle = true;
                 $filterTags = $text;
-                $post = new FilterByTitle(
-                    $value["id"],
+                $post = new Post (
                     $value["title"],
                     $value["image"],
+                    $value["text"],
+                    $value["author"],
+                    $value["category"],
+                    $value["coments"],
                     $value["creationDate"],
-                    $value["updateDate"]
+                    $value["updateDate"],
+                    $value["id"],
                 );
             }
         }
@@ -98,38 +110,9 @@ if($url !== "/Conecta/"){
     <link rel="stylesheet" href="./css/footer.css"></link>
 </head>
 <body>
-    <header class="header">
-        <nav class="navbarDesktop">
-            <div class="brand">
-                <img src="./images/logo.svg" alt="logo"/>
-                <h3>Conecta</h3>
-            </div>
-            <ul class="desktopItems">
-                <li><a href="/Conecta">Home</a></li>
-                <li><a href="/Conecta/#sobre">Sobre nós</a></li>
-                <li><a href="/Conecta/#contato">Contato</a></li>
-            </ul>
-            <img onClick="openMobileDisplay()" class="menuMobileDisabled" src="./images/menumobile.svg"/>
-            <img onClick="closeMobileDisplay()" class="menuMobileCloseDisabled" src="./images/closeMenu.svg"/>
-        </nav>
-        <div class="mobileDisplayDisabled">
-        <img onClick="closeMobileDisplay()" class="menuMobileClose2Disabled" src="./images/closeMenu.svg"/>
-            <ul class="mobileDisplayItems">
-                <li><a onClick="closeMobileDisplay()" href="/Conecta">Home</a></li>
-                <li><a onClick="closeMobileDisplay()" href="/Conecta/#sobre">Sobre nós</a></li>
-                <li><a onClick="closeMobileDisplay()" href="/Conecta/#contato">Contato</a></li>
-            </ul>
-        </div>
-    </header>
+    <?php $navbarHomePage->showElement(); ?>
     <section class="allContent">
-    <section class="welcomeSection">
-        <div class="textContainer">
-            <h1>Olá, somos o Conecta</h1>
-            <h3>Seu blog de notícias sobre Coworking e afins!</h3>
-            <p>Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico. Com mais de 2000 anos, suas raízes podem ser encontradas em uma obra de literatura latina clássica datada de 45 AC. Richard McClintock, um professor de latim do Hampden-Sydney College na Virginia, pesquisou uma das mais obscuras palavras em latim, consectetur, oriunda de uma passagem de Lorem Ipsum, e, procurando por entre citações da palavra na literatura clássica, descobriu a sua indubitável origem. Lorem Ipsum vem das seções 1.10.32 e 1.10.33 do "de Finibus Bonorum et Malorum" (Os Extremos do Bem e do Mal), de Cícero, escrito em 45 AC. Este livro é um tratado de teoria da ética muito popular na época da Renascença. A primeira linha de Lorem Ipsum, "Lorem Ipsum dolor sit amet..." vem de uma linha na seção 1.10.32.</p>
-        </div>
-        <img src="./images/coworking1.jpg" alt="coworking_image"/>
-    </section>
+    <?php $welcomeBanner->showElement(); ?>
     <section class="postsContainer">
         <h2>Confira nossos posts</h2>
         <h3>Fique por dentro das novidades</h3>
@@ -149,22 +132,16 @@ if($url !== "/Conecta/"){
                     </div>
                 </div> <?php 
                 }
-                 ?>
+                ?>
             <?php
                 }
-                } else if($filterByTitle && !$filterByTags) { ?>
-                <div id=<?php echo $post -> id;?> class="post">
-                    <img src="<?php echo $post -> image;?>"/>
-                    <div class="postInfo">
-                        <h4><a href="/Conecta/Pages/PostPage.php/<?php echo $post -> id; ?>"><?php echo $post -> title; ?></a></h4>
-                        <p>Criado em <?php echo $post -> creationDate; ?></p>
-                        <p>Atualizado em <?php echo $post -> updateDate; ?></p>
-                    </div>
-                </div>
+                } else if($filterByTitle && !$filterByTags) {
+                    $post->filterByTitle();
+                ?>
             <?php  
                 }
                 else if(!$filterByTitle && $filterByTags){
-                    foreach ($data as $post => $value) {
+                    foreach ($data as $key => $value) {
                         if($value["category"] === $tag){ ?>
                         <div id=<?php echo $value["id"];?> class="post">
                             <img src="<?php echo $value["image"];?>"/>
@@ -173,7 +150,7 @@ if($url !== "/Conecta/"){
                                 <p>Criado em <?php echo $value["creationDate"]; ?></p>
                                 <p>Atualizado em <?php echo $value["updateDate"]; ?></p>
                             </div>
-                        </div> <?php }
+                        </div> <?php } 
                     }
                 }
             ?>
@@ -207,43 +184,13 @@ if($url !== "/Conecta/"){
             <li onClick="handleRight()" class="rightArrow">></li>
         </ul>
     </section>
-    <section id="sobre" class="aboutContainer">
-        <div class="aboutText">
-            <h2>Conheça um pouco mais sobre o Conecta</h2>
-            <h3>Nossa história e nossa missão</h3>
-            <p>Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico. Com mais de 2000 anos, suas raízes podem ser encontradas em uma obra de literatura latina clássica datada de 45 AC. Richard McClintock, um professor de latim do Hampden-Sydney College na Virginia, pesquisou uma das mais obscuras palavras em latim, consectetur, oriunda de uma passagem de Lorem Ipsum, e, procurando por entre citações da palavra na literatura clássica, descobriu a sua indubitável origem. Lorem Ipsum vem das seções 1.10.32 e 1.10.33 do "de Finibus Bonorum et Malorum" (Os Extremos do Bem e do Mal), de Cícero, escrito em 45 AC. Este livro é um tratado de teoria da ética muito popular na época da Renascença. A primeira linha de Lorem Ipsum, "Lorem Ipsum dolor sit amet..." vem de uma linha na seção 1.10.32.</p>
-        </div>
-        <img src="./images/coworking3.jpg" alt="aboutUsImg"/>
-    </section>
+    <?php $aboutBanner->showElement(); ?>
     <section class="addPostPage">
         <h2>Quer compartilhar alguma novidade?</h2>
         <h3>Publique artigos sobre Empreendedorismo, Tecnologia e Trabalho!</h3>
         <a href="/Conecta/pages/addPost.php">Quero Publicar</a>
     </section>
-    <footer id="contato" class="footerContainer">
-        <div class="firstInfo">
-            <div class="local">
-                <h3>Localização</h3>
-                <p>Feira de Santana,BA</p>
-                <p>Rua Exemplo, 15</p>
-            </div>
-            <div class="contato">
-                <h3>Contato</h3>
-                <p>(75)99999-9999</p>
-                <p>3333-3333</p>
-            </div>
-        </div>
-        <div class="secondInfo">
-            <div class="socialMedia">
-                <h3>Redes sociais</h3>
-                <div class="insta"><img src="./images/insta.png"/> <span>@conecta</span></div>
-                <div class="face"><img src="./images/face.png"/> <span>conecta_blog</span></div>
-            </div>
-            <div class="rights">
-                <p>@Todos direitos reservados</p>
-            </div>
-        </div>
-    </footer>
+    <?php $footerHome->showElement(); ?>
     </section>
 
     <script src="./javascript/navbar.js"></script>

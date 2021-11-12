@@ -4,7 +4,12 @@
 require("../components/sideBar.php");
 require("../backend/data.php");
 require("../backend/Post.php");
-require_once("../components/navbar.php");
+require_once("../components/Navbar.php");
+require("../components/Footer.php");
+
+// Classes
+$postPageNavbar = new Navbar("../../images/logo.svg","../../images/menumobile.svg","../../images/closeMenu.svg");
+$postPageFooter = new Footer("../../images/insta.png","../../images/face.png");
 
 // Variável que armazena o URL da página
 $url = $_SERVER["REQUEST_URI"];
@@ -74,11 +79,12 @@ $newSrcImg = "../".".".$post -> image;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conecta</title>
-    <link rel="stylesheet" href="./css/header.css"></link>
+    <link rel="stylesheet" href="../../css/header.css"></link>
     <link rel="stylesheet" href="../../css/post.css"></link>
+    <link rel="stylesheet" href="../../css/footer.css"></link>
 </head>
 <body>
-    <?php Navbar('../../images/logo.svg','../../images/menumobile.svg','../../images/closeMenu.svg');?>
+    <?php $postPageNavbar->showElement(); ?>
     <section class="postContainerAll">
         <section class="postContainer">
         <img class="postImg" src="<?php echo $newSrcImg; ?>"/>
@@ -113,6 +119,7 @@ $newSrcImg = "../".".".$post -> image;
         </section>
         <?php SideBar();  ?>
     </section>
+    <?php $postPageFooter->showElement();  ?>
 
     <script src="../../javascript/navbar.js"></script>
     <script src="../../javascript/navigation.js"></script>

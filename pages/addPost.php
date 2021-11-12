@@ -1,10 +1,18 @@
 <?php
-require("../components/navbar.php");
+
+// Importações
+require("../components/Navbar.php");
+require("../components/Footer.php");
 require("../backend/data.php");
 require("../backend/Post.php");
 
+// Classes
+$addPostNavbar = new Navbar("../images/logo.svg","../images/menumobile.svg","../images/closeMenu.svg");
+$addPostFooter = new Footer("../images/insta.png","../images/face.png");
+
 $message = "";
 
+// Função responsável por adicionar um post
 if(isset($_POST["sendPost"])){
     $title = $_POST["postTitle"];
     $text = $_POST["postText"];
@@ -33,10 +41,12 @@ if(isset($_POST["sendPost"])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conecta</title>
+    <link rel="stylesheet" href="../css/header.css"></link>
     <link rel="stylesheet" href="../css/addPost.css"></link>
+    <link rel="stylesheet" href="../css/footer.css"></link>
 </head>
 <body>
-    <?php Navbar('../images/logo.svg','../images/menumobile.svg','../images/closeMenu.svg'); ?>
+    <?php $addPostNavbar->showElement(); ?>
     <section class="addPostContainer">
         <h2>Publique um artigo na nossa página!</h2>
         <h3>Compartilhe informações relevantes para a comunidade.</h3>
@@ -64,6 +74,7 @@ if(isset($_POST["sendPost"])){
             <button name="sendPost" type="submit">Publicar</button>
         </form>
     </section>
+    <?php $addPostFooter->showElement(); ?>
 
     <script src="../javascript/navbar.js"></script>
     <script src="../javascript/navigation.js"></script>

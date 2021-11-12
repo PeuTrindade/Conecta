@@ -1,0 +1,37 @@
+Classes que vão ser utilizadas:
+
+- Post
+- Navbar
+- Banner
+
+O que cada classe vai fazer e quais métodos e atributos vão possuir:
+
+- Navbar {
+    Atributos {
+        - Link da logo
+        - Link do menu hamburguer
+        - Link do ícone de fechamento
+    }
+    Métodos {
+        - Exibir elemento
+    }
+}
+
+- Banner {
+    Atributos {
+        - Título
+        - Subtítulo
+        - Texto
+        - Imagem
+    }
+    Métodos {
+        - Exibir elemento
+    }
+}
+
+- Post {
+    Método {
+        - Filtrar por título
+        - Post específico
+    }
+}

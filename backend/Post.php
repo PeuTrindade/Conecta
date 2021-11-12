@@ -24,6 +24,19 @@ class Post {
      $this -> coments = $coments;
     }
 
+    function filterByTitle() {
+        echo "
+        <div id='$this->id' class='post'>
+            <img src='$this->image'/>
+            <div class='postInfo'>
+                <h4><a href='/Conecta/Pages/PostPage.php/$this->id'>$this->title</a></h4>
+                <p>Criado em $this->creationDate</p>
+                <p>Atualizado em $this->updateDate</p>
+            </div>
+        </div>
+        ";
+    }
+
     function generatePost($data) {
         if($this->title && $this->text && $this->category && $this->image){
             $arraySize = count($data);
