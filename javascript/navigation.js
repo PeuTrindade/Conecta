@@ -1,8 +1,11 @@
 // Variável que armazena url da página
 let pathname = window.location.pathname;
 let search = window.location.search;
-const cleanSearch = search.replace("?","");
+let cleanSearch = search.replace("?","");
 const url = pathname + search;
+
+let cleanSearchArray = cleanSearch.split("/");
+console.log(cleanSearchArray)
 
 // Constantes que armazenam informações sobre número de páginas para navegação
 const postsLength = +document.getElementById("dataLength").value;
@@ -12,35 +15,35 @@ const pageNavigation = document.getElementById("pageNavigation");
 // Funções que adicionam páginas de navegação no HTML
 if(postsLength > 5 && postsLength % 5 === 0){
     for (let i = 2; i <= postsPerPage; i++) {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
+        const elementLI = document.createElement("li");
+        const elementA = document.createElement("a");
         const content = document.createTextNode(i);
 
-        a.appendChild(content);
-        li.appendChild(a);
+        elementA.appendChild(content);
+        elementLI.appendChild(elementA);
 
-        a.href = `/Conecta/?${i}`;
-        li.id = i;
-        li.className = "pageDisabled";
+        elementA.href = `./?${i}`;
+        elementLI.id = i;
+        elementLI.className = "pageDisabled";
 
-        pageNavigation.appendChild(li);
+        pageNavigation.appendChild(elementLI);
     }
 }
 
 if(postsLength > 5 && postsLength % 5 !== 0) {
     for (let i = 2; i <= postsPerPage + 1; i++) {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
+        const elementLI = document.createElement("li");
+        const elementA = document.createElement("a");
         const content = document.createTextNode(i);
 
-        a.appendChild(content);
-        li.appendChild(a);
+        elementA.appendChild(content);
+        elementLI.appendChild(elementA);
 
-        a.href = `/Conecta/?${i}`;
-        li.id = i;
-        li.className = "pageDisabled";
+        elementA.href = `./?${i}`;
+        elementLI.id = i;
+        elementLI.className = "pageDisabled";
 
-        pageNavigation.appendChild(li);
+        pageNavigation.appendChild(elementLI);
     }
 }
 
@@ -55,10 +58,9 @@ if(pagesArray.length > 1){
     });
 }
 
-
 // Funções de navegação dos posts
 function handleLeft(){
-    if(cleanSearch){
+    if(cleanSearchArray[0] !== "Empreendedorismo" && cleanSearchArray[0] !== "Tecnologia" && cleanSearchArray[0] !== "Trabalho"){
     const page = +url.split("?")[1];
 
     if(typeof page === 'number' && page !== 1){
@@ -67,19 +69,35 @@ function handleLeft(){
         window.location.href = pathname + newSearch;
     }
     }
+    else if(cleanSearchArray[0] === "Empreendedorismo" || cleanSearchArray[0] === "Tecnologia" || cleanSearchArray[0] === "Trabalho") {
+        const page = +cleanSearchArray[1];
+        if(typeof page === 'number' && page !== 1){
+            const backPage = page - 1;
+            const newSearch = "?" + cleanSearchArray[0] + "/" + backPage;
+            window.location.href = pathname + newSearch;
+        }
+    }
 }
 
 function handleRight(){
-    if(cleanSearch){
-    const page = +url.split("?")[1];
+    if(cleanSearchArray[0] && cleanSearchArray[0] !== "Empreendedorismo" && cleanSearchArray[0] !== "Tecnologia" && cleanSearchArray[0] !== "Trabalho"){
+        const page = +url.split("?")[1];
 
     if(typeof page === 'number' && page < postsPerPage){
         const nextPage = page + 1;
         const newSearch = "?" + nextPage;
         window.location.href = pathname + newSearch;
     }
-    } else {
-        window.location.href = pathname + "?" + 2;
+    } else if(!cleanSearchArray[0]) {
+        window.location.href = pathname + "?" + 2;    
+        
+    } else if(cleanSearchArray[0] === "Empreendedorismo" || cleanSearchArray[0] === "Tecnologia" || cleanSearchArray[0] === "Trabalho") {
+        const page = +cleanSearchArray[1];
+        if(typeof page === 'number' && page < postsPerPage){
+            const nextPage = page + 1;
+            const newSearch = "?" + cleanSearchArray[0] + "/" + nextPage;
+            window.location.href = pathname + newSearch;
+        }
     }
 }
 
@@ -103,3 +121,4 @@ if(cleanSearch === "Empreendedorismo" || cleanSearch === "Tecnologia" || cleanSe
 if(cleanSearch === "NaN"){
     window.location.href = pathname;
 }
+

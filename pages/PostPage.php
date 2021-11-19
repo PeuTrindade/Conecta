@@ -2,75 +2,69 @@
 
 // Importações
 require("../components/sideBar.php");
-require("../backend/data.php");
 require("../backend/Post.php");
 require_once("../components/Navbar.php");
 require("../components/Footer.php");
+include("../backend/DbConnection.php");
+include("../backend/Coment.php");
 
 // Classes
-$postPageNavbar = new Navbar("../../images/logo.svg","../../images/menumobile.svg","../../images/closeMenu.svg");
+$postPageNavbar = new Navbar("../../images/logo.svg","../../images/menumobile.svg","../../images/closeMenu.svg","../../","../../#sobre","../../#contato");
 $postPageFooter = new Footer("../../images/insta.png","../../images/face.png");
 
 // Variável que armazena o URL da página
 $url = $_SERVER["REQUEST_URI"];
 
 // Variável que armazena o ID do post contido na URL
-$postID = explode("/",$url)[4];
+$urlArray = explode("/",$url);
+$urlLastIndex = array_key_last($urlArray);
+$postId = $urlArray[$urlLastIndex];
 
-// Variável que seleciona o post no array de posts através do index
-$getPost = $data[$postID - 1];
+$formartPostId = explode("?",$postId);
 
-// Enviando dados do post para a classe
+$filteredPost = DbConnection::getPostByid($postId);
+
 $post = new Post(
-    $getPost["title"],
-    $getPost["image"],
-    $getPost["text"],
-    $getPost["author"],
-    $getPost["category"],
-    $getPost["coments"],
-    $getPost["creationDate"],
-    $getPost["updateDate"],
-    $getPost["id"]
+    $filteredPost[0]["title"],
+    $filteredPost[0]["image"],
+    $filteredPost[0]["text"],
+    $filteredPost[0]["author"],
+    $filteredPost[0]["category"],
+    [], // Por enquanto os comentários são um array vazio
+    $filteredPost[0]["creationDate"],
+    $filteredPost[0]["updateDate"],
 );
 
-// Alterando o caminho da pasta de imagens
-$newSrcImg = "../".".".$post -> image;
-
-// Função para adicionar comentários
+//Função para adicionar comentários
 if(isset($_POST["sendComent"])){
     $text = $_POST["coment"];
     if($text){
-       array_push($post -> coments,$text);
+       $coment = new Coment(
+            $postId,
+            $text,
+            "admin"
+       );
+       $coment->generateComent();
     } 
 }
 
-// Função para o filtro por título
+// Função para pegar comentários
+$coments = Coment::getComent($formartPostId[0]);
+
+//Função para o filtro por título
 if(isset($_POST["search_btn"])){
     $text = $_POST["title_search"];
     if($text){
-        foreach ($data as $key => $value) {
-            if($value["title"] === $text){
-                $getPost = $data[$value["id"] - 1];
-                $post = new Post(
-                    $getPost["title"],
-                    $getPost["image"],
-                    $getPost["text"],
-                    $getPost["author"],
-                    $getPost["category"],
-                    $getPost["coments"],
-                    $getPost["creationDate"],
-                    $getPost["updateDate"],
-                    $getPost["id"]
-                );
-            }
-        }
+        $data = DbConnection::getPostsByTitle($text);
     }
 }
 
-// Alterando o caminho da pasta de imagens
-$newSrcImg = "../".".".$post -> image;
 ?>
 
+<script>
+
+
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -81,43 +75,25 @@ $newSrcImg = "../".".".$post -> image;
     <title>Conecta</title>
     <link rel="stylesheet" href="../../css/header.css"></link>
     <link rel="stylesheet" href="../../css/post.css"></link>
+    <link rel="stylesheet" href="../../css/coments.css"></link>
     <link rel="stylesheet" href="../../css/footer.css"></link>
 </head>
 <body>
     <?php $postPageNavbar->showElement(); ?>
     <section class="postContainerAll">
-        <section class="postContainer">
-        <img class="postImg" src="<?php echo $newSrcImg; ?>"/>
-        <h2><?php echo $post -> title; ?></h2>
-        <p class="postCategory"><?php echo $post -> category; ?></p>
-        <p class="postText"><?php echo $post -> text ?></p>
-        <h3 class="postComentsTitle">Comentários:</h3>
-        <div class="postComents">
-            <?php 
-                foreach ($post -> coments as $key => $value) {
-                    if($value){ ?>
-                     <div class="postComent">
-                        <h3><?php echo $value; ?></h3>
-                     </div> <?php     
-                    } else { ?>
-                        <p class="postAlert">Nenhum comentário</p>
-                        <?php
-                    }
-                }
-            ?>
-        </div>
-        <form action="" method="POST" class="formContainer">
-            <h3>Adicione seu comentário</h3>
-            <textarea name="coment"></textarea> <br>
-            <button type="submit" name="sendComent">Enviar</button>
-        </form>
-        <div class="moreInfo">
-            <p>Criado por <?php echo $post -> author; ?></p>
-            <p>Criado em <?php echo $post -> creationDate; ?></p>
-            <p>Atualizado em <?php echo $post -> updateDate; ?></p>
-        </div>
-        </section>
+        <?php $post->showPost("../../".$post->image,$coments); ?>
         <?php SideBar();  ?>
+    </section>
+    <section class='comentsContainer'>
+        <h3 class='postComentsTitle'>Comentários</h3>
+        <div class='postComents'> 
+            <?php Coment::showComent($coments);  ?>
+        </div>
+        <form action='' method='POST' class='formContainer'>
+            <h3>Adicione um comentário</h3>
+            <textarea name='coment'></textarea>
+            <button type='submit' name='sendComent'>Comentar</button>
+        </form>
     </section>
     <?php $postPageFooter->showElement();  ?>
 

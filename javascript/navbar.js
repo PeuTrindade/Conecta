@@ -30,3 +30,16 @@ function closeMobileDisplay(){
     menuMobileDisabled.className = "menuMobileActive";
     mobileDisplay.className = "mobileDisplayDisabled";
 }
+
+
+if(window.location.pathname !== "/Conecta/") {
+    const aboutItem = document.getElementById("about");
+    const contactItem = document.getElementById("contact");
+    const aboutItemMobile = document.getElementById("aboutMobile");
+    const contactItemMobile = document.getElementById("contactMobile");
+
+    aboutItem.style = "display:none";
+    contactItem.style = "display:none";
+    aboutItemMobile.style = "display:none";
+    contactItemMobile.style = "display:none";
+}

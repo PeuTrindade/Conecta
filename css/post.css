@@ -38,58 +38,6 @@
     margin-top: 2rem;
 }
 
-.postComentsTitle {
-    margin-left: 3%;
-    font-size: 1.5rem;
-    margin-top: 1rem;
-}
-
-.postComents {
-    margin-left: 3%;
-    margin-top: 1rem;
-}
-
-.postComent {
-    background-color: #e6e6e6;
-    margin-bottom: 1rem;
-    width: 700px;
-    padding: 1rem;
-    border-radius: .5rem;
-}
-
-.formContainer {
-    margin-left: 3%;
-    margin-top: 2rem;
-}
-
-.formContainer h3 {
-    font-size: 1.5rem;
-}
-
-.formContainer textarea {
-    width: 700px;
-    height: 6rem;
-    margin-top: 1rem;
-    outline: none;
-    background-color: #e6e6e6;
-    border: none;
-    border-radius: .5rem;
-    padding-left: .3rem;
-    padding-top: .3rem;
-}
-
-.formContainer button {
-    margin-top: 1rem;
-    width: 7rem;
-    height: 2rem;
-    border: none;
-    outline: none;
-    background-color: #375D81;
-    color: white;
-    cursor: pointer;
-    border-radius: .5rem;
-}
-
 .moreInfo {
     margin-left: 3%;
     margin-top: 2rem;

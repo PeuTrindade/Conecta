@@ -8,6 +8,13 @@ html {
     scroll-behavior: smooth;
 }
 
+.header {
+    position: sticky;
+    position:-webkit-sticky;
+    top: 0;
+    z-index: 10000;
+}
+
 .navbarDesktop {
     display: flex;
     background-color: #375D81;
@@ -16,8 +23,6 @@ html {
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
     box-shadow: 1px 1px 5px #000000;
-    position:sticky;
-    width: 100%;
 }
 
 .brand {
