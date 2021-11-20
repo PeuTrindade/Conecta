@@ -60,7 +60,7 @@ if(pagesArray.length > 1){
 
 // Funções de navegação dos posts
 function handleLeft(){
-    if(cleanSearchArray[0] !== "Empreendedorismo" && cleanSearchArray[0] !== "Tecnologia" && cleanSearchArray[0] !== "Trabalho"){
+    if(cleanSearchArray[0] !== localStorage["textValue"] && cleanSearchArray[0] !== "Empreendedorismo" && cleanSearchArray[0] !== "Tecnologia" && cleanSearchArray[0] !== "Trabalho"){
     const page = +url.split("?")[1];
 
     if(typeof page === 'number' && page !== 1){
@@ -69,7 +69,7 @@ function handleLeft(){
         window.location.href = pathname + newSearch;
     }
     }
-    else if(cleanSearchArray[0] === "Empreendedorismo" || cleanSearchArray[0] === "Tecnologia" || cleanSearchArray[0] === "Trabalho") {
+    else if(cleanSearchArray[0] === localStorage["textValue"] || cleanSearchArray[0] === "Empreendedorismo" || cleanSearchArray[0] === "Tecnologia" || cleanSearchArray[0] === "Trabalho") {
         const page = +cleanSearchArray[1];
         if(typeof page === 'number' && page !== 1){
             const backPage = page - 1;
@@ -80,7 +80,7 @@ function handleLeft(){
 }
 
 function handleRight(){
-    if(cleanSearchArray[0] && cleanSearchArray[0] !== "Empreendedorismo" && cleanSearchArray[0] !== "Tecnologia" && cleanSearchArray[0] !== "Trabalho"){
+    if(cleanSearchArray[0] && cleanSearchArray[0] !== localStorage["textValue"] && cleanSearchArray[0] !== "Empreendedorismo" && cleanSearchArray[0] !== "Tecnologia" && cleanSearchArray[0] !== "Trabalho"){
         const page = +url.split("?")[1];
 
     if(typeof page === 'number' && page < postsPerPage){
@@ -91,8 +91,9 @@ function handleRight(){
     } else if(!cleanSearchArray[0]) {
         window.location.href = pathname + "?" + 2;    
         
-    } else if(cleanSearchArray[0] === "Empreendedorismo" || cleanSearchArray[0] === "Tecnologia" || cleanSearchArray[0] === "Trabalho") {
+    } else if(cleanSearchArray[0] === localStorage["textValue"] || cleanSearchArray[0] === "Empreendedorismo" || cleanSearchArray[0] === "Tecnologia" || cleanSearchArray[0] === "Trabalho") {
         const page = +cleanSearchArray[1];
+        console.log('haha')
         if(typeof page === 'number' && page < postsPerPage){
             const nextPage = page + 1;
             const newSearch = "?" + cleanSearchArray[0] + "/" + nextPage;

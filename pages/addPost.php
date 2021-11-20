@@ -20,16 +20,15 @@ if(isset($_POST["sendPost"])){
     $image = $_FILES["postImage"];
     $author = $_POST["postAuthor"];
 
-    if($image){
-        $fileName = time().".jpg";
-        if(move_uploaded_file($image['tmp_name'], $fileName)){
-        $fileSize = filesize($fileName);
-        $mysqlImg = addslashes(fread(fopen($fileName,"r"),$fileSize));
-        }
-    }
+    $extension = strtolower(substr($image["name"],-4));
+    $newName = md5(time()).$extension;
+    $directory = "../images/";
+
+    move_uploaded_file($image["tmp_name"],$directory.$newName);
+
     $post = new Post(
             $title,
-            $mysqlImg,
+            $newName,
             $text,
             $author,
             $category

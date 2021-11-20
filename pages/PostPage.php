@@ -81,7 +81,7 @@ if(isset($_POST["search_btn"])){
 <body>
     <?php $postPageNavbar->showElement(); ?>
     <section class="postContainerAll">
-        <?php $post->showPost("../../".$post->image,$coments); ?>
+        <?php $post->showPost("../../images/".$post->image,$coments); ?>
         <?php SideBar();  ?>
     </section>
     <section class='comentsContainer'>

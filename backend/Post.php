@@ -35,7 +35,7 @@ class Post {
 
             echo "
                   <div id='$postId' class='post'>
-                      <img src='$postImage'/>
+                      <img src='images/$postImage'/>
                       <div class='postInfo'>
                           <h4><a href='./pages/postPage.php/$postId'>$postTitle</a></h4>
                           <p>Criado em $postCreationDate</p>
@@ -57,7 +57,7 @@ class Post {
 
             echo "
                   <div id='$postId' class='post'>
-                      <img src='$postImage'/>
+                      <img src='images/$postImage'/>
                       <div class='postInfo'>
                           <h4><a href='./pages/postPage.php/$postId'>$postTitle</a></h4>
                           <p>Criado em $postCreationDate</p>

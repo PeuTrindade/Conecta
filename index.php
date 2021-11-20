@@ -11,7 +11,7 @@ include("./backend/DbConnection.php");
 $postsArray = Post::getPosts();
 $navbarHomePage = new Navbar("./images/logo.svg","./images/menumobile.svg","./images/closeMenu.svg","./","./#sobre","./#contato");
 $welcomeBanner = new Banner("Olá, somos o Conecta","Seu blog de notícias sobre Coworking e afins!","Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico. Com mais de 2000 anos, suas raízes podem ser encontradas em uma obra de literatura latina clássica datada de 45 AC. Richard McClintock, um professor de latim do Hampden-Sydney College na Virginia, pesquisou uma das mais obscuras palavras em latim, consectetur, oriunda de uma passagem de Lorem Ipsum, e, procurando por entre citações da palavra na literatura clássica, descobriu a sua indubitável origem. Lorem Ipsum vem das seções 1.10.32 e 1.10.33 do 'de Finibus Bonorum et Malorum' (Os Extremos do Bem e do Mal), de Cícero, escrito em 45 AC. Este livro é um tratado de teoria da ética muito popular na época da Renascença. A primeira linha de Lorem Ipsum, 'Lorem Ipsum dolor sit amet...' vem de uma linha na seção 1.10.32.","./images/coworking1.jpg","welcomeSection","textContainer","coworkingImg");
-$aboutBanner = new Banner("Conheça um pouco mais sobre o Conecta","Nossa história e nossa missão","Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico. Com mais de 2000 anos, suas raízes podem ser encontradas em uma obra de literatura latina clássica datada de 45 AC. Richard McClintock, um professor de latim do Hampden-Sydney College na Virginia, pesquisou uma das mais obscuras palavras em latim, consectetur, oriunda de uma passagem de Lorem Ipsum, e, procurando por entre citações da palavra na literatura clássica, descobriu a sua indubitável origem. Lorem Ipsum vem das seções 1.10.32 e 1.10.33 do 'de Finibus Bonorum et Malorum' (Os Extremos do Bem e do Mal), de Cícero, escrito em 45 AC. Este livro é um tratado de teoria da ética muito popular na época da Renascença. A primeira linha de Lorem Ipsum, 'Lorem Ipsum dolor sit amet...' vem de uma linha na seção 1.10.32.","./images/coworking3.jpg","aboutContainer","aboutText","aboutUsImg");
+$aboutBanner = new Banner("Conheça um pouco mais sobre o Conecta","Nossa história e nossa missão","Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico. Com mais de 2000 anos, suas raízes podem ser encontradas em uma obra de literatura latina clássica datada de 45 AC. Richard McClintock, um professor de latim do Hampden-Sydney College na Virginia, pesquisou uma das mais obscuras palavras em latim, consectetur, oriunda de uma passagem de Lorem Ipsum, e, procurando por entre citações da palavra na literatura clássica, descobriu a sua indubitável origem. Lorem Ipsum vem das seções 1.10.32 e 1.10.33 do 'de Finibus Bonorum et Malorum' (Os Extremos do Bem e do Mal), de Cícero, escrito em 45 AC. Este livro é um tratado de teoria da ética muito popular na época da Renascença. A primeira linha de Lorem Ipsum, 'Lorem Ipsum dolor sit amet...' vem de uma linha na seção 1.10.32.","./images/coworking3.jpg","aboutContainer","aboutText","aboutUsImg","sobre");
 $footerHome = new Footer("./images/insta.png","./images/face.png");
 
 // Variável onde recebe informações do post
@@ -27,11 +27,9 @@ $filterTags = null;
 // Função para o filtro por título
 if(isset($_POST["search_btn"])){
     $text = $_POST["title_search"];
-
+    
     if($text){
-        $filterByTitle = true;
-        $filterTags = $text;
-        $postsArray = DbConnection::getPostsByTitle($text);
+        header("Location: ./?$text/1");
     }
 }
 
@@ -48,6 +46,14 @@ if(isset($_POST["deleteFilter"])){
 $url = $_SERVER["REQUEST_URI"];
 $urlExplode = explode("/",$url);
 $lastIndexUrl = array_key_last($urlExplode);
+
+$titleSearchValue = str_replace("?","",$urlExplode[2]);
+
+if($titleSearchValue && count($urlExplode) > 3){
+    $filterByTitle = true;
+    $filterTags = $titleSearchValue;
+    $postsArray = DbConnection::getPostsByTitle($titleSearchValue);
+}
 
 // Função para o filtro por categorias
 $category1 = array_search("?Empreendedorismo",$urlExplode);
@@ -81,6 +87,7 @@ if($pageTag){
     if($pageTag[0] === "?") {
         $pageTag = str_replace("?","",$pageTag);
     }
+
     if($pageTag !== "NaN"){
         if($pageTag){
             $max = 5 * $pageTag;
@@ -94,8 +101,18 @@ $dataLength = count($postsArray);
 
 ?>
 
-<script>
-   
+<script> 
+    // window.onload = () => {
+    //     document.getElementById("titleSearch").value = localStorage["textValue"];
+    // }
+
+   function handleText(){
+       let textValue = document.getElementById("titleSearch").value;
+       localStorage["textValue"] = textValue;
+    //    window.location.href = pathname + "#" + localStorage["textValue"];
+   }
+//    window.location.href = pathname + "#" + localStorage["textValue"];
+
 </script>
 
 <!DOCTYPE html>
@@ -132,7 +149,7 @@ $dataLength = count($postsArray);
                             $postUpdateDate = $value->updateDate;
 
                             echo "<div id='$postId' class='post'>
-                                        <img src='$postImage'/>
+                                        <img src='images/$postImage'/>
                                         <div class='postInfo'>
                                             <h4><a href='./pages/postPage.php/$postId'>$postTitle</a></h4>
                                             <p>Criado em $postCreationDate</p>
@@ -151,7 +168,8 @@ $dataLength = count($postsArray);
         </div>
         <div class="sideBar">
             <form action="" method="POST" class="search">
-                <input name="title_search" type="text" placeholder="Busque por um título"/> <br>
+                <input id="titleSearch" name="title_search" type="text" placeholder="Busque por um título"/> <br>
+                <input name="title_search_value" id="titleSearchValue" type="hidden"/>
                 <button onClick="handleText()" name="search_btn" type="submit">Pesquisar</button>
             </form>
             <?php  

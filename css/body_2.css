@@ -53,6 +53,7 @@
 
 .post img {
     width: 200px;
+    height: 120px;
     object-fit: cover;
     border-radius: .5rem;
 }

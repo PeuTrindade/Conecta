@@ -8,8 +8,9 @@ class Banner {
     public $sectionClass;
     public $divClass;
     public $alt;
+    public $sectionId;
 
-    function __construct($title,$subtitle,$text,$image,$sectionClass,$divClass,$alt) {
+    function __construct($title,$subtitle,$text,$image,$sectionClass,$divClass,$alt,$sectionId=null) {
         $this->title = $title;
         $this->subtitle = $subtitle;
         $this->text = $text;
@@ -17,11 +18,12 @@ class Banner {
         $this->sectionClass = $sectionClass;
         $this->divClass = $divClass;
         $this->alt = $alt;
+        $this->sectionId = $sectionId;
     }
 
     function showElement() {
         echo "
-        <section class='$this->sectionClass'>
+        <section id='$this->sectionId' class='$this->sectionClass'>
         <div class='$this->divClass'>
             <h1>$this->title</h1>
             <h3>$this->subtitle</h3>
