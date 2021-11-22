@@ -43,6 +43,40 @@ class DbConnection {
         $res->execute();
     }
 
+    public static function deleteComent($postId) {
+        $connection = self::getConnection();
+
+        $res = $connection->prepare("DELETE FROM coments WHERE postId = :postId");
+        $res->bindParam(":postId",$postId);
+
+        $res->execute();
+    }
+
+    public static function updatePost($post) {
+        $connection = self::getConnection();
+
+        $res = $connection->prepare("UPDATE posts SET title = :title, text = :text, image = :image, creationDate = :creationDate, updateDate = :updateDate, author = :author, category = :category WHERE id = :id");
+        $res->bindParam(":title",$post->title);
+        $res->bindParam(":text",$post->text);
+        $res->bindParam(":creationDate",$post->creationDate);
+        $res->bindParam(":updateDate",$post->updateDate);
+        $res->bindParam(":image",$post->image);
+        $res->bindParam(":author",$post->author);
+        $res->bindParam(":category",$post->category);
+        $res->bindParam(":id",$post->id);
+
+        $res->execute();
+    }
+ 
+    public static function deletePost($postId){
+        $connection = self::getConnection();
+
+        $res = $connection->prepare("DELETE FROM posts WHERE id = :postId");
+        $res->bindParam(":postId",$postId);
+
+        $res->execute();
+    }
+
     public static function getPosts() {
         $connection = self::getConnection();
 

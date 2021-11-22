@@ -47,6 +47,7 @@ $url = $_SERVER["REQUEST_URI"];
 $urlExplode = explode("/",$url);
 $lastIndexUrl = array_key_last($urlExplode);
 
+// Função para o filtro por título
 $titleSearchValue = str_replace("?","",$urlExplode[2]);
 
 if($titleSearchValue && count($urlExplode) > 3){
@@ -78,6 +79,7 @@ if($category1 || $category2 || $category3){
     }
 }
 
+// Função de paginação
 $pageTag = $urlExplode[$lastIndexUrl];
 
 $max = 5;
@@ -102,16 +104,14 @@ $dataLength = count($postsArray);
 ?>
 
 <script> 
-    // window.onload = () => {
-    //     document.getElementById("titleSearch").value = localStorage["textValue"];
-    // }
+    if(localStorage["redirect"]){
+        localStorage["redirect"] = "";
+    }
 
-   function handleText(){
+    function handleText(){
        let textValue = document.getElementById("titleSearch").value;
        localStorage["textValue"] = textValue;
-    //    window.location.href = pathname + "#" + localStorage["textValue"];
-   }
-//    window.location.href = pathname + "#" + localStorage["textValue"];
+    }
 
 </script>
 

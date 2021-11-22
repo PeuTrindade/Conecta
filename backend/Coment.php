@@ -49,6 +49,10 @@ class Coment {
         return $coments;
     }
 
+    public static function deleteComent($postId) {
+        DbConnection::deleteComent($postId);
+    }
+
     public function generateComent() {
         if($this->postId && $this->text && $this->author) {
             date_default_timezone_set("America/Sao_Paulo");

@@ -10,9 +10,8 @@ class Post {
     public $text;
     public $author;
     public $category;
-    public $coments;
  
-    function __construct($title,$image,$text,$author,$category,$coments = [],$creationDate = null,$updateDate = null,$id = null) {
+    function __construct($title,$text,$author,$category,$image = null,$creationDate = null,$updateDate = null,$id = null) {
      $this->id = $id;
      $this->title = $title;
      $this->creationDate = $creationDate;
@@ -21,7 +20,6 @@ class Post {
      $this->text = $text;
      $this->author = $author;
      $this->category = $category;
-     $this->coments = $coments;
     }
 
     public static function filterByTitle($data,$max,$min) {
@@ -75,11 +73,10 @@ class Post {
         foreach ($data as $key => $value) {
             $post = new Post(
                 $value["title"],
-                $value["image"],
                 $value["text"],
                 $value["author"],
                 $value["category"],
-                [],
+                $value["image"],
                 $value["creationDate"],
                 $value["creationDate"],
                 $value["id"],
@@ -89,7 +86,7 @@ class Post {
         return $posts;
     }
 
-    function showPost($fomartImageSrc) {
+    public function showPost($fomartImageSrc) {
         echo "
         <section class='postContainer'>
             <img class='postImg' src='$fomartImageSrc'/>
@@ -105,13 +102,38 @@ class Post {
         ";
     }
 
-    function generatePost() {
+    public function generatePost() {
         if($this->title && $this->text && $this->image && $this->author && $this->category) {
             date_default_timezone_set("America/Sao_Paulo");
             $this->date = date('y/m/d');
             
             // Enviando dados do post para a classe do Banco de dados
             DbConnection::addPost($this);
+        }
+    }
+
+    public function updatePost() {
+        if($this->title && $this->text && $this->image && $this->author && $this->category && $this->creationDate) {
+            date_default_timezone_set("America/Sao_Paulo");
+            $this->updateDate = date('y/m/d');
+
+            // Enviando dados do post para a classe do Banco de dados
+            DbConnection::updatePost($this);
+        }
+    }
+
+    public function deletePost() {
+        DbConnection::deletePost($this->id);
+    }
+
+    public function uploadImage($imageName,$imageTmpName) {
+        if($imageName && $imageTmpName){
+            $extension = strtolower(substr($imageName,-4));
+            $newName = md5(time()).$extension;
+            $directory = "../images/";
+        
+            move_uploaded_file($imageTmpName,$directory.$newName);
+            $this->image = $newName;
         }
     }
 }

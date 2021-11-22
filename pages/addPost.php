@@ -3,6 +3,7 @@
 // Importações
 require("../components/Navbar.php");
 require("../components/Footer.php");
+require("../components/postForm.php");
 require("../backend/Post.php");
 require("../backend/DbConnection.php");
 
@@ -20,20 +21,14 @@ if(isset($_POST["sendPost"])){
     $image = $_FILES["postImage"];
     $author = $_POST["postAuthor"];
 
-    $extension = strtolower(substr($image["name"],-4));
-    $newName = md5(time()).$extension;
-    $directory = "../images/";
-
-    move_uploaded_file($image["tmp_name"],$directory.$newName);
-
     $post = new Post(
             $title,
-            $newName,
             $text,
             $author,
             $category
     );
 
+    $post->uploadImage($image["name"],$image["tmp_name"]);
     $post->generatePost();
     $message = "Publicação realizada com sucesso!";
 }
@@ -57,27 +52,11 @@ if(isset($_POST["sendPost"])){
         <h2>Publique um artigo na nossa página!</h2>
         <h3>Compartilhe informações relevantes para a comunidade.</h3>
         <?php  
-            if($message){
+            if($message){ 
                echo "<h5 class='alert'>$message</h5>"; 
             } 
+            postForm("../pages/addPost.php");
         ?>
-        <form action="" method="POST" class="form" enctype="multipart/form-data">
-            <label for="title">Título</label> <br>
-            <input required placeholder="Ambientes de Coworking..." id="title" name="postTitle" type="text"></input> <br>
-            <label for="image">Imagem</label> <br>
-            <input required id="image" name="postImage" type="file"></input> <br>
-            <label for="author">Autor</label> <br>
-            <input required id="author" name="postAuthor" type="text"></input> <br>
-            <label for="text">Texto</label> <br>
-            <textarea required id="text" name="postText" type="text"></textarea> <br>
-            <label for="category">Categoria</label> <br>
-            <select required name="postCategory" id="category">
-                <option value="Empreendedorismo" selected >Empreendedorismo</option>
-                <option value="Trabalho">Trabalho</option>
-                <option value="Tecnologia">Tecnologia</option>
-            </select> <br>
-            <button name="sendPost" type="submit">Publicar</button>
-        </form>
     </section>
     <?php $addPostFooter->showElement(); ?>
 

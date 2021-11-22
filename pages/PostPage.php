@@ -22,17 +22,19 @@ $postId = $urlArray[$urlLastIndex];
 
 $formartPostId = explode("?",$postId);
 
-$filteredPost = DbConnection::getPostByid($postId);
+$filteredPostArray = DbConnection::getPostByid($postId);
+$firstIndexFilteredPost = array_key_first($filteredPostArray);
+$filteredPostItem = $filteredPostArray[$firstIndexFilteredPost];
 
 $post = new Post(
-    $filteredPost[0]["title"],
-    $filteredPost[0]["image"],
-    $filteredPost[0]["text"],
-    $filteredPost[0]["author"],
-    $filteredPost[0]["category"],
-    [], // Por enquanto os comentários são um array vazio
-    $filteredPost[0]["creationDate"],
-    $filteredPost[0]["updateDate"],
+    $filteredPostItem["title"],
+    $filteredPostItem["text"],
+    $filteredPostItem["author"],
+    $filteredPostItem["category"],
+    $filteredPostItem["image"],
+    $filteredPostItem["creationDate"],
+    $filteredPostItem["updateDate"],
+    $postId,
 );
 
 //Função para adicionar comentários
@@ -59,11 +61,21 @@ if(isset($_POST["search_btn"])){
     }
 }
 
+// Função para deletar um post 
+if(isset($_POST["deletePost"])){
+   $post->deletePost();
+   Coment::deleteComent($postId);
+}
+
 ?>
-
 <script>
+    if(localStorage["redirect"]){
+        window.location.href = localStorage["redirect"];
+    }
 
-
+    function handleDeleteClick(){
+        localStorage["redirect"] = "../../";
+    }
 </script>
 
 <!DOCTYPE html>
@@ -84,15 +96,21 @@ if(isset($_POST["search_btn"])){
         <?php $post->showPost("../../images/".$post->image,$coments); ?>
         <?php SideBar();  ?>
     </section>
-    <section class='comentsContainer'>
-        <h3 class='postComentsTitle'>Comentários</h3>
-        <div class='postComents'> 
+    <section class="comentsContainer">
+        <h3 class="postComentsTitle">Comentários</h3>
+        <div class="postComents"> 
             <?php Coment::showComent($coments);  ?>
         </div>
-        <form action='' method='POST' class='formContainer'>
+        <form action="" method="POST" class="formContainer">
             <h3>Adicione um comentário</h3>
-            <textarea name='coment'></textarea>
-            <button type='submit' name='sendComent'>Comentar</button>
+            <textarea name="coment"></textarea>
+            <button type="submit" name="sendComent">Comentar</button>
+        </form>
+    </section>
+    <section class="controlsContainer">
+        <form action="" method="POST" class="formControls">
+            <a href="../updatePost/<?php echo $post->id; ?>">Atualizar publicação</a>
+            <button onClick="handleDeleteClick()" type='submit' name='deletePost'>Deletar publicação</button>
         </form>
     </section>
     <?php $postPageFooter->showElement();  ?>

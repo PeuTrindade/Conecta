@@ -48,6 +48,8 @@
     margin-bottom: .5rem;
 }
 
+
+
 @media screen and (max-width:1136px){
     .postContainerAll {
         flex-direction: column;
