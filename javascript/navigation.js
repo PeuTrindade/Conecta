@@ -102,16 +102,18 @@ function handleRight(){
     }
 }
 
+console.log(cleanSearchArray[0])
+
 // Função para gerenciar quais tags vão estar ativas ou desabilitadas
-if(cleanSearch === "Empreendedorismo" || cleanSearch === "Tecnologia" || cleanSearch === "Trabalho"){
+if(cleanSearchArray[0] === "Empreendedorismo" || cleanSearchArray[0] === "Tecnologia" || cleanSearchArray[0] === "Trabalho"){
     const tag1 = document.getElementById("tag1");
     const tag2 = document.getElementById("tag2");
     const tag3 = document.getElementById("tag3");
 
-    if(cleanSearch === "Empreendedorismo"){
+    if(cleanSearchArray[0] === "Empreendedorismo"){
         tag1.className = "tagActive";
     } 
-    else if(cleanSearch === "Tecnologia"){
+    else if(cleanSearchArray[0] === "Tecnologia"){
         tag2.className = "tagActive";
     }
     else {

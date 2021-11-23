@@ -50,7 +50,7 @@ $lastIndexUrl = array_key_last($urlExplode);
 // Função para o filtro por título
 $titleSearchValue = str_replace("?","",$urlExplode[2]);
 
-if($titleSearchValue && count($urlExplode) > 3){
+if($titleSearchValue && count($urlExplode) >= 4){
     $filterByTitle = true;
     $filterTags = $titleSearchValue;
     $postsArray = DbConnection::getPostsByTitle($titleSearchValue);

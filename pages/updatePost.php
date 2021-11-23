@@ -43,6 +43,10 @@ if(isset($_POST["sendPost"])){
     $creationDate = $post->creationDate;
     $updateDate = $post->updateDate;
     $id = $postId;
+    
+    if(!$image["name"]){
+        $image = $post->image;
+    }
 
     $post = new Post(
             $title,
@@ -55,7 +59,12 @@ if(isset($_POST["sendPost"])){
             $id
     );
 
-    $post->uploadImage($image["name"],$image["tmp_name"]);
+    $typeOfImage = gettype($image);
+
+    if($typeOfImage === "array"){
+        $post->uploadImage($image["name"],$image["tmp_name"]);
+    }
+
     $post->updatePost();
     $message = "Publicação atualizada com sucesso!";
 }
@@ -82,7 +91,7 @@ if(isset($_POST["sendPost"])){
             if($message){ 
                echo "<h5 class='alert'>$message</h5>"; 
             } 
-            postForm("../../pages/updatePost.php/$post->id",$post->title,$post->author,$post->text);
+            postForm("../../pages/updatePost.php/$post->id","Atualizar",$post->title,$post->author,$post->text);
         ?>
     </section>
     <section class="previewImg">

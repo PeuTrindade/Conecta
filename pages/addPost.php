@@ -55,7 +55,7 @@ if(isset($_POST["sendPost"])){
             if($message){ 
                echo "<h5 class='alert'>$message</h5>"; 
             } 
-            postForm("../pages/addPost.php");
+            postForm("../pages/addPost.php","Publicar");
         ?>
     </section>
     <?php $addPostFooter->showElement(); ?>

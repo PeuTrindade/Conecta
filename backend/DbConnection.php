@@ -94,6 +94,10 @@ class DbConnection {
         $result = $connection->query($sql);
         $row = $result->fetchAll();
 
+        // foreach ($row as $key => $value) {
+        //     $this->formatDate();
+        // }
+
         return $row;
     }
 
@@ -131,4 +135,9 @@ class DbConnection {
 
         $res->execute();
     }
+
+    // private function formatDate() {
+    //     $this->creationDate = implode("/",array_reverse(explode("-",$this->creationDate)));
+    //     $this->updateDate = implode("/",array_reverse(explode("-",$this->updateDate)));
+    // }
 }

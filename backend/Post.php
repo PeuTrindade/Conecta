@@ -124,6 +124,7 @@ class Post {
 
     public function deletePost() {
         DbConnection::deletePost($this->id);
+        Coment::deleteComent($this->id);
     }
 
     public function uploadImage($imageName,$imageTmpName) {

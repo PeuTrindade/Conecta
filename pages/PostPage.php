@@ -20,8 +20,6 @@ $urlArray = explode("/",$url);
 $urlLastIndex = array_key_last($urlArray);
 $postId = $urlArray[$urlLastIndex];
 
-$formartPostId = explode("?",$postId);
-
 $filteredPostArray = DbConnection::getPostByid($postId);
 $firstIndexFilteredPost = array_key_first($filteredPostArray);
 $filteredPostItem = $filteredPostArray[$firstIndexFilteredPost];
@@ -51,7 +49,7 @@ if(isset($_POST["sendComent"])){
 }
 
 // Função para pegar comentários
-$coments = Coment::getComent($formartPostId[0]);
+$coments = Coment::getComent($postId);
 
 //Função para o filtro por título
 if(isset($_POST["search_btn"])){
@@ -64,7 +62,6 @@ if(isset($_POST["search_btn"])){
 // Função para deletar um post 
 if(isset($_POST["deletePost"])){
    $post->deletePost();
-   Coment::deleteComent($postId);
 }
 
 ?>
