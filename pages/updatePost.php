@@ -43,11 +43,6 @@ if(isset($_POST["sendPost"])){
     $creationDate = $post->creationDate;
     $updateDate = $post->updateDate;
     $id = $postId;
-    
-    function reverseDate($date){
-        $newDate = str_replace("/", "-", $date);
-        return date('Y-m-d', strtotime($newDate));
-    }
 
     if(!$image["name"]){
         $image = $post->image;
@@ -59,8 +54,8 @@ if(isset($_POST["sendPost"])){
             $author,
             $category,
             $image,
-            reverseDate($creationDate),
-            reverseDate($updateDate),
+            Post::reverseDate($creationDate),
+            Post::reverseDate($updateDate),
             $id
     );
 
@@ -96,7 +91,7 @@ if(isset($_POST["sendPost"])){
             if($message){ 
                echo "<h5 class='alert'>$message</h5>"; 
             } 
-            postForm("../../pages/updatePost.php/$post->id","Atualizar",$post->title,$post->author,$post->text);
+            postForm("../../pages/updatePost.php/$post->id","Atualizar",$post->image,$post->title,$post->author,$post->text);
         ?>
     </section>
     <section class="previewImg">
@@ -106,5 +101,12 @@ if(isset($_POST["sendPost"])){
 
     <script src="../../javascript/navbar.js"></script>
     <script src="../../javascript/navigation.js"></script>
+    <script>
+        let inputFile = document.getElementById("image");
+        let inputLabel = document.getElementById("imageLabel");
+        inputFile.addEventListener("change", (event) => {
+            inputLabel.innerText = event.srcElement.files[0].name;
+        });
+    </script>
 </body>
 </html>

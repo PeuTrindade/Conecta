@@ -124,4 +124,3 @@ if(cleanSearchArray[0] === "Empreendedorismo" || cleanSearchArray[0] === "Tecnol
 if(cleanSearch === "NaN"){
     window.location.href = pathname;
 }
-

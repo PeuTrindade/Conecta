@@ -34,7 +34,7 @@
     border: none;
     border-radius: .5rem;
     padding-left: .3rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .form textarea {
@@ -84,6 +84,29 @@
     border-radius: .5rem;
     box-shadow: 5px 5px 10px #C4D7ED;
     object-fit: cover;
+}
+
+.form p {
+    margin-bottom: .5rem;
+}
+
+#image {
+    display: none;
+}
+
+#imageLabel {
+    background-color: #e6e6e6;
+    color: rgb(121, 121, 121);
+    cursor: pointer;
+    padding: .5rem;
+    font-size: .9rem;
+    border-radius: .5rem;
+}
+
+#imageLabel:hover {
+    background-color: #375D81;
+    color: white;
+    transition: all ease .2s;
 }
 
 @media screen and (max-width:1306px){

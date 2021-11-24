@@ -55,12 +55,19 @@ if(isset($_POST["sendPost"])){
             if($message){ 
                echo "<h5 class='alert'>$message</h5>"; 
             } 
-            postForm("../pages/addPost.php","Publicar");
+            postForm("../pages/addPost.php","Publicar","Selecione uma imagem");
         ?>
     </section>
     <?php $addPostFooter->showElement(); ?>
 
-    <script src="../javascript/navbar.js"></script>
+    <script src="../javascript/navbar.js"></>
     <script src="../javascript/navigation.js"></script>
+    <script>
+        let inputFile = document.getElementById("image");
+        let inputLabel = document.getElementById("imageLabel");
+        inputFile.addEventListener("change", (event) => {
+            inputLabel.innerText = event.srcElement.files[0].name;
+        });
+    </script>
 </body>
 </html>

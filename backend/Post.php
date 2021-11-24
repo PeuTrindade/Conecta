@@ -22,6 +22,11 @@ class Post {
      $this->category = $category;
     }
 
+    public static function reverseDate($date) {
+        $newDate = str_replace("/", "-", $date);
+        return date('Y-m-d', strtotime($newDate));
+    }
+
     public static function filterByTitle($data,$max,$min) {
         foreach ($data as $key => $value) {
             if($key >= $min && $key < $max){
@@ -78,11 +83,12 @@ class Post {
                 $value["category"],
                 $value["image"],
                 $value["creationDate"],
-                $value["creationDate"],
+                $value["updateDate"],
                 $value["id"],
             );
             array_push($posts,$post);
         }
+        
         return $posts;
     }
 
