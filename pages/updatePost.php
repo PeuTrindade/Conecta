@@ -44,6 +44,11 @@ if(isset($_POST["sendPost"])){
     $updateDate = $post->updateDate;
     $id = $postId;
     
+    function reverseDate($date){
+        $newDate = str_replace("/", "-", $date);
+        return date('Y-m-d', strtotime($newDate));
+    }
+
     if(!$image["name"]){
         $image = $post->image;
     }
@@ -54,8 +59,8 @@ if(isset($_POST["sendPost"])){
             $author,
             $category,
             $image,
-            $creationDate,
-            $updateDate,
+            reverseDate($creationDate),
+            reverseDate($updateDate),
             $id
     );
 

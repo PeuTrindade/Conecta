@@ -27,7 +27,20 @@ class DbConnection {
         $result = $connection->query($sql);
         $rows = $result->fetchAll();
 
-        return $rows;
+        $rowsFomarted = array();
+
+        foreach ($rows as $key => $value) {
+            $formatedInfo = array(
+               "postId" => $value["postId"],
+               "text" => $value["text"],
+               "author" => $value["author"],
+               "creationDate" => self::formatDate($value["creationDate"]),
+               "updateDate" => self::formatDate($value["updateDate"]),
+               "id" => $value["id"]
+            );
+            array_push($rowsFomarted,$formatedInfo);
+        }
+        return $rowsFomarted;
     }
 
     public static function addComent($coment) {
@@ -84,7 +97,22 @@ class DbConnection {
         $result = $connection->query($sql);
         $rows = $result->fetchAll();
 
-        return $rows;
+        $rowsFomarted = array();
+
+        foreach ($rows as $key => $value) {
+            $formatedInfo = array(
+               "title" => $value["title"],
+               "text" => $value["text"],
+               "author" => $value["author"],
+               "category" => $value["category"],
+               "image" => $value["image"],
+               "creationDate" => self::formatDate($value["creationDate"]),
+               "updateDate" => self::formatDate($value["updateDate"]),
+               "id" => $value["id"]
+            );
+            array_push($rowsFomarted,$formatedInfo);
+        }
+        return $rowsFomarted;
     }
 
     public static function getPostById($id) {
@@ -93,12 +121,22 @@ class DbConnection {
         $sql = "SELECT * FROM posts WHERE id = $id";
         $result = $connection->query($sql);
         $row = $result->fetchAll();
+        $rowsFomarted = array();
 
-        // foreach ($row as $key => $value) {
-        //     $this->formatDate();
-        // }
-
-        return $row;
+        foreach ($row as $key => $value) {
+            $formatedInfo = array(
+               "title" => $value["title"],
+               "text" => $value["text"],
+               "author" => $value["author"],
+               "category" => $value["category"],
+               "image" => $value["image"],
+               "creationDate" => self::formatDate($value["creationDate"]),
+               "updateDate" => self::formatDate($value["updateDate"]),
+               "id" => $value["id"]
+            );
+            array_push($rowsFomarted,$formatedInfo);
+        }
+        return $rowsFomarted;
     }
 
     public static function getPostsByCategory($category) {
@@ -108,7 +146,22 @@ class DbConnection {
         $result = $connection->query($sql);
         $row = $result->fetchAll();
 
-        return $row;
+        $rowsFomarted = array();
+
+        foreach ($row as $key => $value) {
+            $formatedInfo = array(
+               "title" => $value["title"],
+               "text" => $value["text"],
+               "author" => $value["author"],
+               "category" => $value["category"],
+               "image" => $value["image"],
+               "creationDate" => self::formatDate($value["creationDate"]),
+               "updateDate" => self::formatDate($value["updateDate"]),
+               "id" => $value["id"]
+            );
+            array_push($rowsFomarted,$formatedInfo);
+        }
+        return $rowsFomarted;
     }
 
     public static function getPostsByTitle($title) {
@@ -118,7 +171,23 @@ class DbConnection {
         $result = $connection->query($sql);
         $rows = $result->fetchAll();
 
-        return $rows;
+        $rowsFomarted = array();
+
+        foreach ($rows as $key => $value) {
+            $formatedInfo = array(
+               "title" => $value["title"],
+               "text" => $value["text"],
+               "author" => $value["author"],
+               "category" => $value["category"],
+               "image" => $value["image"],
+               "creationDate" => self::formatDate($value["creationDate"]),
+               "updateDate" => self::formatDate($value["updateDate"]),
+               "id" => $value["id"]
+            );
+            array_push($rowsFomarted,$formatedInfo);
+        }
+
+        return $rowsFomarted;
     }
 
     public static function addPost($post) {
@@ -136,8 +205,8 @@ class DbConnection {
         $res->execute();
     }
 
-    // private function formatDate() {
-    //     $this->creationDate = implode("/",array_reverse(explode("-",$this->creationDate)));
-    //     $this->updateDate = implode("/",array_reverse(explode("-",$this->updateDate)));
-    // }
+    private static function formatDate($date) {
+        $date = implode("/",array_reverse(explode("-",$date)));
+        return $date;
+    }
 }

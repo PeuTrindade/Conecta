@@ -123,8 +123,8 @@ class Post {
     }
 
     public function deletePost() {
-        DbConnection::deletePost($this->id);
         Coment::deleteComent($this->id);
+        DbConnection::deletePost($this->id);
     }
 
     public function uploadImage($imageName,$imageTmpName) {
