@@ -12,6 +12,7 @@ $addPostNavbar = new Navbar("../images/logo.svg","../images/menumobile.svg","../
 $addPostFooter = new Footer("../images/insta.png","../images/face.png");
 
 $message = "";
+$errorMessage = "";
 
 // Função responsável por adicionar um post
 if(isset($_POST["sendPost"])){
@@ -29,8 +30,20 @@ if(isset($_POST["sendPost"])){
     );
 
     $post->uploadImage($image["name"],$image["tmp_name"]);
-    $post->generatePost();
-    $message = "Publicação realizada com sucesso!";
+    $post->validateFields();
+
+    if(!$post->errors){
+        $post->generatePost();
+        $message = "Publicação realizada com sucesso!";
+    } else {
+        $errorPhrase = "";
+        foreach ($post->errors as $key => $field) {
+            foreach ($field as $key => $value) {
+                $errorPhrase = $errorPhrase.$value." ";
+            }
+        }
+        $errorMessage = $errorPhrase;
+    }
 }
 
 ?>
@@ -55,6 +68,9 @@ if(isset($_POST["sendPost"])){
             if($message){ 
                echo "<h5 class='alert'>$message</h5>"; 
             } 
+            else if($errorMessage){
+               echo "<h5 class='errorsMessage'>$errorMessage</h5>"; 
+            }
             postForm("../pages/addPost.php","Publicar","Selecione uma imagem");
         ?>
     </section>

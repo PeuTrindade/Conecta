@@ -10,8 +10,6 @@ require("../backend/DbConnection.php");
 $updatePostNavbar = new Navbar("../../images/logo.svg","../../images/menumobile.svg","../../images/closeMenu.svg","../../","./#sobre","./#contato");
 $updatePostFooter = new Footer("../../images/insta.png","../../images/face.png");
 
-$message = "";
-
 $url = $_SERVER["REQUEST_URI"];
 $urlArray = explode("/",$url);
 $urlLastIndex = array_key_last($urlArray);
@@ -32,6 +30,9 @@ $post = new Post(
     $filteredPostItem["updateDate"],
     $postId,
 );
+
+$message = "";
+$errorMessage = "";
 
 //Função responsável por atualizar um post
 if(isset($_POST["sendPost"])){
@@ -65,8 +66,20 @@ if(isset($_POST["sendPost"])){
         $post->uploadImage($image["name"],$image["tmp_name"]);
     }
 
-    $post->updatePost();
-    $message = "Publicação atualizada com sucesso!";
+    $post->validateFields();
+
+    if(!$post->errors){
+        $post->updatePost();
+        $message = "Publicação atualizada com sucesso!";
+    } else {
+        $errorPhrase = "";
+        foreach ($post->errors as $key => $field) {
+            foreach ($field as $key => $value) {
+                $errorPhrase = $errorPhrase.$value." ";
+            }
+        }
+        $errorMessage = $errorPhrase;
+    }
 }
 
 ?>
@@ -89,8 +102,11 @@ if(isset($_POST["sendPost"])){
         <h3>Altere as informações abaixo</h3>
         <?php  
             if($message){ 
-               echo "<h5 class='alert'>$message</h5>"; 
+                echo "<h5 class='alert'>$message</h5>"; 
             } 
+            else if($errorMessage){
+                echo "<h5 class='errorsMessage'>$errorMessage</h5>"; 
+            }
             postForm("../../pages/updatePost.php/$post->id","Atualizar",$post->image,$post->title,$post->author,$post->text);
         ?>
     </section>

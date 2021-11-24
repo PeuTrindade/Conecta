@@ -109,6 +109,15 @@
     transition: all ease .2s;
 }
 
+.errorsMessage {
+    margin-top: 2rem;
+    background-color: #ad1a00;
+    display: inline-block;
+    color: white;
+    padding: .5rem;
+    border-radius: .5rem;
+}
+
 @media screen and (max-width:1306px){
     .previewImg {
         position: relative;

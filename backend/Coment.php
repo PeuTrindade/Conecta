@@ -7,6 +7,7 @@ class Coment {
     public $creationDate;
     public $updateDate;
     public $author;
+    public $errors = array();
 
     public function __construct($postId,$text,$author,$creationDate=null,$updateDate=null,$id=null) {
         $this->postId = $postId;
@@ -15,6 +16,14 @@ class Coment {
         $this->creationDate = $creationDate;
         $this->updateDate = $updateDate;
         $this->id = $id;
+    }
+
+    public function validateComent() {
+        $textWithoutSpaces = str_replace(" ","",$this->text);
+
+        if(!$textWithoutSpaces){
+            $this->errors["text"] = "Nenhum conteúdo identificado. Tente novamente!";
+        }
     }
 
     public static function showComent($coments) {

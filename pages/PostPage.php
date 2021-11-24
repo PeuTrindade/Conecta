@@ -35,6 +35,8 @@ $post = new Post(
     $postId,
 );
 
+$message = "";
+
 //Função para adicionar comentários
 if(isset($_POST["sendComent"])){
     $text = $_POST["coment"];
@@ -44,7 +46,15 @@ if(isset($_POST["sendComent"])){
             $text,
             "admin"
        );
-       $coment->generateComent();
+
+       $coment->validateComent();
+       if(!$coment->errors){
+           $coment->generateComent(); 
+       } else {
+           foreach ($coment->errors as $key => $value) {
+               $message = $value;
+           }
+       }
     } 
 }
 
@@ -90,7 +100,7 @@ if(isset($_POST["deletePost"])){
 <body>
     <?php $postPageNavbar->showElement(); ?>
     <section class="postContainerAll">
-        <?php $post->showPost("../../images/".$post->image,$coments); ?>
+        <?php $post->showPost("../../images/".$post->image,$message); ?>
         <?php SideBar();  ?>
     </section>
     <section class="comentsContainer">
