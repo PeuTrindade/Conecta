@@ -4,13 +4,13 @@
 class Post {
     public $id;
     public $title;
-    public $creationDate;
-    public $updateDate;
+    private $creationDate;
+    private $updateDate;
     public $image;
     public $text;
     public $author;
     public $category;
-    public $errors = array();
+    private $errors = array();
  
     function __construct($title,$text,$author,$category,$image = null,$creationDate = null,$updateDate = null,$id = null) {
      $this->id = $id;
@@ -23,16 +23,28 @@ class Post {
      $this->category = $category;
     }
 
+    public function getErrors(){
+        return $this->errors;
+    }
+
+    public function getCreationDate(){
+        return $this->creationDate;
+    }
+
+    public function getUpdateDate(){
+        return $this->updateDate;
+    }
+
     public function validateFields(){
         $this->validateTitle();
         $this->validateAuthor();
         $this->validateImage();
         $this->validateText();
 
-        if(!$this->errors["title"] &&
-           !$this->errors["image"] &&
-           !$this->errors["author"] &&
-           !$this->errors["text"]){
+        if(empty($this->errors["title"]) &&
+           empty($this->errors["image"]) &&
+           empty($this->errors["author"]) &&
+           empty($this->errors["text"])){
 
             $this->errors = array();
         }

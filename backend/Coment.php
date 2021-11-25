@@ -18,6 +18,10 @@ class Coment {
         $this->id = $id;
     }
 
+    public function getErrors(){
+        return $this->errors;
+    }
+
     public function validateComent() {
         $textWithoutSpaces = str_replace(" ","",$this->text);
 

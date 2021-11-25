@@ -68,11 +68,14 @@ class DbConnection {
     public static function updatePost($post) {
         $connection = self::getConnection();
 
+        $creationDate = $post->getCreationDate();
+        $updateDate = $post->getUpdateDate();
+
         $res = $connection->prepare("UPDATE posts SET title = :title, text = :text, image = :image, creationDate = :creationDate, updateDate = :updateDate, author = :author, category = :category WHERE id = :id");
         $res->bindParam(":title",$post->title);
         $res->bindParam(":text",$post->text);
-        $res->bindParam(":creationDate",$post->creationDate);
-        $res->bindParam(":updateDate",$post->updateDate);
+        $res->bindParam(":creationDate",$creationDate);
+        $res->bindParam(":updateDate",$updateDate);
         $res->bindParam(":image",$post->image);
         $res->bindParam(":author",$post->author);
         $res->bindParam(":category",$post->category);

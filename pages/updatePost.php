@@ -41,8 +41,8 @@ if(isset($_POST["sendPost"])){
     $category = $_POST["postCategory"];
     $image = $_FILES["postImage"];
     $author = $_POST["postAuthor"];
-    $creationDate = $post->creationDate;
-    $updateDate = $post->updateDate;
+    $creationDate = $post->getCreationDate();
+    $updateDate = $post->getUpdateDate();
     $id = $postId;
 
     if(!$image["name"]){
@@ -68,12 +68,12 @@ if(isset($_POST["sendPost"])){
 
     $post->validateFields();
 
-    if(!$post->errors){
+    if(!$post->getErrors()){
         $post->updatePost();
         $message = "Publicação atualizada com sucesso!";
     } else {
         $errorPhrase = "";
-        foreach ($post->errors as $key => $field) {
+        foreach ($post->getErrors() as $key => $field) {
             foreach ($field as $key => $value) {
                 $errorPhrase = $errorPhrase.$value." ";
             }

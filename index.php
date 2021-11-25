@@ -145,8 +145,8 @@ $dataLength = count($postsArray);
                             $postId = $value->id;
                             $postImage = $value->image;
                             $postTitle = $value->title;
-                            $postCreationDate = $value->creationDate;
-                            $postUpdateDate = $value->updateDate;
+                            $postCreationDate = $value->getCreationDate();
+                            $postUpdateDate = $value->getUpdateDate();
 
                             echo "<div id='$postId' class='post'>
                                         <img src='images/$postImage'/>

@@ -32,12 +32,12 @@ if(isset($_POST["sendPost"])){
     $post->uploadImage($image["name"],$image["tmp_name"]);
     $post->validateFields();
 
-    if(!$post->errors){
+    if(!$post->getErrors()){
         $post->generatePost();
         $message = "Publicação realizada com sucesso!";
     } else {
         $errorPhrase = "";
-        foreach ($post->errors as $key => $field) {
+        foreach ($post->getErrors() as $key => $field) {
             foreach ($field as $key => $value) {
                 $errorPhrase = $errorPhrase.$value." ";
             }

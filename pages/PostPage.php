@@ -48,10 +48,10 @@ if(isset($_POST["sendComent"])){
        );
 
        $coment->validateComent();
-       if(!$coment->errors){
+       if(!$coment->getErrors()){
            $coment->generateComent(); 
        } else {
-           foreach ($coment->errors as $key => $value) {
+           foreach ($coment->getErrors() as $key => $value) {
                $message = $value;
            }
        }
